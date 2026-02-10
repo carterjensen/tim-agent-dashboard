@@ -1,802 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" data-last-updated="2026-02-10T10:16:28-06:00">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tim's Agent Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0f0f1e;
-            min-height: 100vh;
-            padding: 12px;
-            color: #e0e0e0;
-        }
-        
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-        }
-        
-        @media (min-width: 768px) {
-            body {
-                padding: 20px;
-            }
-        }
-        
-        header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .header-content {
-            flex: 1;
-        }
-        
-        h1 {
-            font-size: 24px;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-        
-        .subtitle {
-            color: #a0a0a0;
-            font-size: 12px;
-        }
-        
-        @media (min-width: 768px) {
-            header {
-                flex-direction: row;
-                align-items: center;
-                padding: 24px 32px;
-                margin-bottom: 40px;
-                border-radius: 16px;
-            }
-            
-            h1 {
-                font-size: 32px;
-                margin-bottom: 8px;
-            }
-            
-            .subtitle {
-                font-size: 14px;
-            }
-        }
-        
-        .refresh-btn {
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid rgba(102, 126, 234, 0.4);
-            color: #667eea;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .refresh-btn:hover {
-            background: rgba(102, 126, 234, 0.3);
-            border-color: rgba(102, 126, 234, 0.6);
-        }
-        
-        @media (min-width: 768px) {
-            .refresh-btn {
-                width: auto;
-                padding: 10px 20px;
-            }
-        }
-        
-        /* Org Chart Structure */
-        .org-chart {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-        }
-        
-        .org-tier {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 16px;
-            position: relative;
-            width: 100%;
-        }
-        
-        @media (min-width: 768px) {
-            .org-chart {
-                gap: 40px;
-            }
-            
-            .org-tier {
-                gap: 20px;
-            }
-        }
-        
-        /* Leader Card (Carter) */
-        .leader-card {
-            background: linear-gradient(135deg, #dc2127 0%, #a31615 100%);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 12px 48px rgba(220, 33, 39, 0.4);
-            border: 2px solid rgba(220, 33, 39, 0.5);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        .leader-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .leader-card h2 {
-            font-size: 28px;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-        
-        .leader-title {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 600;
-        }
-        
-        @media (min-width: 768px) {
-            .leader-card {
-                border-radius: 20px;
-                padding: 32px;
-            }
-            
-            .leader-avatar {
-                width: 120px;
-                height: 120px;
-                margin: 0 auto 20px;
-                border: 4px solid rgba(255, 255, 255, 0.3);
-            }
-            
-            .leader-card h2 {
-                font-size: 36px;
-                margin-bottom: 8px;
-            }
-            
-            .leader-title {
-                font-size: 16px;
-            }
-        }
-        
-        /* Connecting Lines */
-        .connector {
-            width: 2px;
-            height: 24px;
-            background: linear-gradient(to bottom, rgba(102, 126, 234, 0.5), rgba(102, 126, 234, 0.2));
-            margin: 0 auto;
-        }
-        
-        .connector-horizontal {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            position: relative;
-            height: 24px;
-        }
-        
-        .connector-horizontal::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            max-width: 1000px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, rgba(102, 126, 234, 0.5), transparent);
-        }
-        
-        .connector-vertical {
-            position: absolute;
-            top: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 24px;
-            background: rgba(102, 126, 234, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .connector {
-                height: 40px;
-            }
-            
-            .connector-horizontal {
-                height: 40px;
-            }
-            
-            .connector-vertical {
-                top: -40px;
-                height: 40px;
-            }
-        }
-        
-        /* Agent Cards */
-        .agent-card {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            width: 100%;
-            position: relative;
-        }
-        
-        .agent-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .agent-card {
-                border-radius: 16px;
-                padding: 24px;
-                max-width: 360px;
-            }
-            
-            .agent-card:hover {
-                transform: translateY(-4px);
-            }
-        }
-        
-        .agent-card.coordinator {
-            border: 2px solid rgba(102, 126, 234, 0.6);
-            background: linear-gradient(135deg, #1e1e38 0%, #1a2344 100%);
-        }
-        
-        .agent-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        
-        .agent-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            margin-right: 16px;
-            object-fit: cover;
-            border: 2px solid rgba(102, 126, 234, 0.3);
-        }
-        
-        .agent-info h3 {
-            font-size: 20px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-        
-        .agent-id {
-            font-size: 12px;
-            color: #667eea;
-            font-family: 'Monaco', monospace;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        
-        .status-active {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .status-idle {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-        }
-        
-        .agent-role {
-            color: #b0b0b0;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-        
-        .agent-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(102, 126, 234, 0.2);
-        }
-        
-        .stat {
-            font-size: 12px;
-            color: #808080;
-        }
-        
-        .stat strong {
-            display: block;
-            font-size: 18px;
-            color: #ffffff;
-            margin-top: 4px;
-        }
-        
-        .dropdown-section {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(102, 126, 234, 0.2);
-        }
-        
-        .toggle-dropdown {
-            background: rgba(102, 126, 234, 0.08);
-            border: 1px solid rgba(102, 126, 234, 0.25);
-            color: #667eea;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            transition: all 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-            min-height: 40px;
-        }
-        
-        .toggle-dropdown:hover {
-            background: rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-        
-        .toggle-dropdown .arrow {
-            font-size: 10px;
-            opacity: 0.7;
-        }
-        
-        @media (min-width: 768px) {
-            .toggle-dropdown {
-                padding: 8px 16px;
-                min-height: auto;
-            }
-        }
-        
-        .dropdown-content {
-            display: none;
-            margin-top: 12px;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            max-height: 240px;
-            overflow-y: auto;
-        }
-        
-        .dropdown-content.show {
-            display: block;
-        }
-        
-        /* Scrollable list containers */
-        .scrollable-list {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(102, 126, 234, 0.5) rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Fade hint at bottom of scrollable areas */
-        .scroll-container {
-            position: relative;
-        }
-        .scroll-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background: linear-gradient(transparent, rgba(15, 15, 30, 0.8));
-            pointer-events: none;
-            border-radius: 0 0 8px 8px;
-        }
-        
-        .dropdown-content h4 {
-            color: #667eea;
-            font-size: 14px;
-            margin-top: 12px;
-            margin-bottom: 8px;
-        }
-        
-        .dropdown-content h4:first-child {
-            margin-top: 0;
-        }
-        
-        .dropdown-content p,
-        .dropdown-content ul {
-            color: #c0c0c0;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        
-        .dropdown-content ul {
-            margin-left: 20px;
-            margin-top: 8px;
-        }
-        
-        .dropdown-content blockquote {
-            border-left: 3px solid #667eea;
-            padding-left: 12px;
-            margin: 8px 0;
-            color: #a0a0a0;
-            font-style: italic;
-        }
-        
-        .task-item {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-        }
-        
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        
-        .task-name {
-            color: #e0e0e0;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .task-meta {
-            font-size: 12px;
-            color: #808080;
-        }
-        
-        .task-cost {
-            color: #10b981;
-            font-weight: 600;
-        }
-        
-        .arrow {
-            transition: transform 0.2s;
-        }
-        
-        .arrow.rotate {
-            transform: rotate(180deg);
-        }
-        
-        .file-link {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 6px 12px;
-            background: rgba(102, 126, 234, 0.15);
-            border: 1px solid rgba(102, 126, 234, 0.4);
-            border-radius: 6px;
-            color: #667eea;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        
-        .file-link:hover {
-            background: rgba(102, 126, 234, 0.25);
-            border-color: rgba(102, 126, 234, 0.6);
-        }
-        
-        .file-link::before {
-            content: '📄 ';
-        }
-        
-        .team-tier {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            max-width: 1400px;
-            width: 100%;
-        }
-        
-        @media (min-width: 768px) {
-            .team-tier {
-                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-                gap: 20px;
-            }
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(102, 126, 234, 0.5);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(102, 126, 234, 0.7);
-        }
-        
-        /* Team Collaboration Timeline Styles */
-        .team-collab-section {
-            width: 100%;
-            max-width: 1400px;
-            margin: 20px auto;
-        }
-        
-        .section-title {
-            font-size: 24px;
-            color: #ffffff;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
-        }
-        
-        @media (min-width: 768px) {
-            .section-title {
-                font-size: 28px;
-                margin-bottom: 30px;
-            }
-        }
-        
-        .collab-card {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(102, 126, 234, 0.2);
-        }
-        
-        @media (min-width: 768px) {
-            .collab-card {
-                border-radius: 16px;
-                padding: 24px;
-            }
-        }
-        
-        .collab-heading {
-            font-size: 18px;
-            color: #667eea;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-        }
-        
-        @media (min-width: 768px) {
-            .collab-heading {
-                font-size: 20px;
-            }
-        }
-        
-        /* Daily Rituals */
-        .ritual-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .ritual-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border-left: 3px solid rgba(102, 126, 234, 0.5);
-        }
-        
-        .ritual-time {
-            flex-shrink: 0;
-            font-size: 12px;
-            font-weight: 600;
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.15);
-            padding: 4px 8px;
-            border-radius: 4px;
-            min-width: 65px;
-            text-align: center;
-        }
-        
-        .ritual-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        
-        .ritual-details {
-            flex: 1;
-        }
-        
-        .ritual-details strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-        
-        .ritual-details p {
-            color: #a0a0a0;
-            font-size: 13px;
-            line-height: 1.4;
-            margin: 0;
-        }
-        
-        /* Collaboration Timeline */
-        .collab-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .collab-event {
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border-left: 3px solid rgba(16, 185, 129, 0.5);
-        }
-        
-        .event-time {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #10b981;
-            background: rgba(16, 185, 129, 0.15);
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-        }
-        
-        .event-flow {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .agent-badge, .team-badge {
-            font-size: 13px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .agent-badge.tim {
-            background: rgba(102, 126, 234, 0.2);
-            color: #667eea;
-            border: 1px solid rgba(102, 126, 234, 0.4);
-        }
-        
-        .agent-badge.atlas {
-            background: rgba(70, 214, 219, 0.2);
-            color: #46d6db;
-            border: 1px solid rgba(70, 214, 219, 0.4);
-        }
-        
-        .agent-badge.reid {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.4);
-        }
-        
-        .agent-badge.mason {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.4);
-        }
-        
-        .agent-badge.chase {
-            background: rgba(167, 139, 250, 0.2);
-            color: #a78bfa;
-            border: 1px solid rgba(167, 139, 250, 0.4);
-        }
-        
-        .team-badge {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.4);
-        }
-        
-        .flow-arrow {
-            color: #808080;
-            font-size: 16px;
-        }
-        
-        .event-details strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .event-details p {
-            color: #c0c0c0;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-        
-        .event-meta {
-            display: inline-block;
-            font-size: 11px;
-            color: #808080;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 3px 8px;
-            border-radius: 4px;
-        }
-        
-        /* Ongoing Work */
-        .ongoing-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .ongoing-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-        }
-        
-        .ongoing-details {
-            flex: 1;
-        }
-        
-        .ongoing-details strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-        
-        .ongoing-details p {
-            color: #a0a0a0;
-            font-size: 13px;
-            line-height: 1.4;
-            margin: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f1e; min-height: 100vh; padding: 12px; color: #e0e0e0; }
+        .container { max-width: 1800px; margin: 0 auto; }
+        @media (min-width: 768px) { body { padding: 20px; } }
+
+        header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); border: 1px solid rgba(102,126,234,0.2); display: flex; flex-direction: column; gap: 12px; }
+        .header-content { flex: 1; }
+        h1 { font-size: 24px; color: #fff; margin-bottom: 6px; }
+        .subtitle { color: #a0a0a0; font-size: 12px; }
+        @media (min-width: 768px) { header { flex-direction: row; align-items: center; padding: 24px 32px; margin-bottom: 40px; border-radius: 16px; } h1 { font-size: 32px; margin-bottom: 8px; } .subtitle { font-size: 14px; } }
+        .refresh-btn { background: rgba(102,126,234,0.2); border: 1px solid rgba(102,126,234,0.4); color: #667eea; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; text-align: center; }
+        .refresh-btn:hover { background: rgba(102,126,234,0.3); border-color: rgba(102,126,234,0.6); }
+        @media (min-width: 768px) { .refresh-btn { width: auto; padding: 10px 20px; } }
+
+        .org-chart { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .org-tier { display: flex; justify-content: center; align-items: flex-start; gap: 16px; position: relative; width: 100%; }
+        @media (min-width: 768px) { .org-chart { gap: 40px; } .org-tier { gap: 20px; } }
+
+        .leader-card { background: linear-gradient(135deg, #dc2127 0%, #a31615 100%); border-radius: 16px; padding: 20px; box-shadow: 0 12px 48px rgba(220,33,39,0.4); border: 2px solid rgba(220,33,39,0.5); width: 100%; max-width: 400px; text-align: center; }
+        .leader-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover; border: 3px solid rgba(255,255,255,0.3); }
+        .leader-card h2 { font-size: 28px; color: #fff; margin-bottom: 6px; }
+        .leader-title { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 600; }
+        @media (min-width: 768px) { .leader-card { border-radius: 20px; padding: 32px; } .leader-avatar { width: 120px; height: 120px; margin: 0 auto 20px; border: 4px solid rgba(255,255,255,0.3); } .leader-card h2 { font-size: 36px; margin-bottom: 8px; } .leader-title { font-size: 16px; } }
+
+        .connector { width: 2px; height: 24px; background: linear-gradient(to bottom, rgba(102,126,234,0.5), rgba(102,126,234,0.2)); margin: 0 auto; }
+        .connector-horizontal { display: flex; justify-content: center; align-items: center; width: 100%; position: relative; height: 24px; }
+        .connector-horizontal::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80%; max-width: 1000px; height: 2px; background: linear-gradient(to right, transparent, rgba(102,126,234,0.5), transparent); }
+        .connector-vertical { position: absolute; top: -24px; left: 50%; transform: translateX(-50%); width: 2px; height: 24px; background: rgba(102,126,234,0.3); }
+        @media (min-width: 768px) { .connector { height: 40px; } .connector-horizontal { height: 40px; } .connector-vertical { top: -40px; height: 40px; } }
+
+        .agent-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(102,126,234,0.2); width: 100%; position: relative; }
+        .agent-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(102,126,234,0.3); }
+        @media (min-width: 768px) { .agent-card { border-radius: 16px; padding: 24px; max-width: 360px; } .agent-card:hover { transform: translateY(-4px); } }
+        .agent-card.coordinator { border: 2px solid rgba(102,126,234,0.6); background: linear-gradient(135deg, #1e1e38 0%, #1a2344 100%); }
+
+        .agent-header { display: flex; align-items: center; margin-bottom: 16px; }
+        .agent-avatar { width: 64px; height: 64px; border-radius: 50%; margin-right: 16px; object-fit: cover; border: 2px solid rgba(102,126,234,0.3); }
+        .agent-info h3 { font-size: 20px; color: #fff; margin-bottom: 4px; }
+        .agent-id { font-size: 12px; color: #667eea; font-family: 'Monaco', monospace; }
+
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        .status-active { background: rgba(16,185,129,0.2); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+        .status-idle { background: rgba(251,191,36,0.2); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+
+        .agent-role { color: #b0b0b0; font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+        .agent-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(102,126,234,0.2); }
+        .stat { font-size: 12px; color: #808080; }
+        .stat strong { display: block; font-size: 18px; color: #fff; margin-top: 4px; }
+
+        .dropdown-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(102,126,234,0.2); }
+        .toggle-dropdown { background: rgba(102,126,234,0.08); border: 1px solid rgba(102,126,234,0.25); color: #667eea; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; text-align: left; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; min-height: 40px; }
+        .toggle-dropdown:hover { background: rgba(102,126,234,0.2); border-color: rgba(102,126,234,0.5); }
+        .toggle-dropdown .arrow { font-size: 10px; opacity: 0.7; }
+        @media (min-width: 768px) { .toggle-dropdown { padding: 8px 16px; min-height: auto; } }
+
+        .dropdown-content { display: none; margin-top: 12px; padding: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(102,126,234,0.1); max-height: 240px; overflow-y: auto; }
+        .dropdown-content.show { display: block; }
+        .dropdown-content h4 { color: #667eea; font-size: 14px; margin-top: 12px; margin-bottom: 8px; }
+        .dropdown-content h4:first-child { margin-top: 0; }
+        .dropdown-content p, .dropdown-content ul { color: #c0c0c0; font-size: 13px; line-height: 1.6; }
+        .dropdown-content ul { margin-left: 20px; margin-top: 8px; }
+        .dropdown-content blockquote { border-left: 3px solid #667eea; padding-left: 12px; margin: 8px 0; color: #a0a0a0; font-style: italic; }
+
+        .task-item { padding: 8px 0; border-bottom: 1px solid rgba(102,126,234,0.1); }
+        .task-item:last-child { border-bottom: none; }
+        .task-name { color: #e0e0e0; font-weight: 600; margin-bottom: 4px; }
+        .task-meta { font-size: 12px; color: #808080; }
+
+        .file-link { display: inline-block; margin-top: 8px; padding: 6px 12px; background: rgba(102,126,234,0.15); border: 1px solid rgba(102,126,234,0.4); border-radius: 6px; color: #667eea; text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+        .file-link:hover { background: rgba(102,126,234,0.25); border-color: rgba(102,126,234,0.6); }
+        .file-link::before { content: '📄 '; }
+
+        .team-tier { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1400px; width: 100%; }
+        @media (min-width: 768px) { .team-tier { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; } }
+
+        .scrollable-list { scrollbar-width: thin; scrollbar-color: rgba(102,126,234,0.5) rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb { background: rgba(102,126,234,0.5); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(102,126,234,0.7); }
+
+        .team-collab-section { width: 100%; max-width: 1400px; margin: 20px auto; }
+        .section-title { font-size: 24px; color: #fff; margin-bottom: 20px; text-align: center; padding-bottom: 12px; border-bottom: 2px solid rgba(102,126,234,0.3); }
+        @media (min-width: 768px) { .section-title { font-size: 28px; margin-bottom: 30px; } }
+
+        .collab-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); border: 1px solid rgba(102,126,234,0.2); }
+        @media (min-width: 768px) { .collab-card { border-radius: 16px; padding: 24px; } }
+        .collab-heading { font-size: 18px; color: #667eea; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(102,126,234,0.2); }
+        @media (min-width: 768px) { .collab-heading { font-size: 20px; } }
+
+        .ritual-list { display: flex; flex-direction: column; gap: 16px; max-height: 300px; overflow-y: auto; }
+        .ritual-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border-left: 3px solid rgba(102,126,234,0.5); }
+        .ritual-time { flex-shrink: 0; font-size: 12px; font-weight: 600; color: #667eea; background: rgba(102,126,234,0.15); padding: 4px 8px; border-radius: 4px; min-width: 65px; text-align: center; }
+        .ritual-icon { font-size: 20px; flex-shrink: 0; }
+        .ritual-details { flex: 1; }
+        .ritual-details strong { color: #fff; display: block; margin-bottom: 4px; font-size: 14px; }
+        .ritual-details p { color: #a0a0a0; font-size: 13px; line-height: 1.4; margin: 0; }
+
+        .agent-badge, .team-badge { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; }
+        .agent-badge.tim { background: rgba(102,126,234,0.2); color: #667eea; border: 1px solid rgba(102,126,234,0.4); }
+        .agent-badge.atlas { background: rgba(70,214,219,0.2); color: #46d6db; border: 1px solid rgba(70,214,219,0.4); }
+        .agent-badge.reid { background: rgba(16,185,129,0.2); color: #10b981; border: 1px solid rgba(16,185,129,0.4); }
+        .agent-badge.mason { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.4); }
+        .agent-badge.chase { background: rgba(167,139,250,0.2); color: #a78bfa; border: 1px solid rgba(167,139,250,0.4); }
+        .team-badge { background: rgba(251,191,36,0.2); color: #fbbf24; border: 1px solid rgba(251,191,36,0.4); }
+
+        @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
+        @keyframes spin { 0% { transform:rotate(0deg) } 100% { transform:rotate(360deg) } }
+        @keyframes glow-pulse { 0%,100% { box-shadow:0 0 8px rgba(72,187,120,0.3) } 50% { box-shadow:0 0 20px rgba(72,187,120,0.6) } }
+        @keyframes slide-glow { 0% { background-position:200% 0 } 100% { background-position:-200% 0 } }
+        .currently-working-card { background:linear-gradient(135deg,rgba(72,187,120,0.08),rgba(102,126,234,0.05)); border:1px solid rgba(72,187,120,0.25); border-radius:14px; padding:16px 18px; margin-bottom:16px; position:relative; overflow:hidden; }
+        .currently-working-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#48bb78,#667eea,transparent); background-size:200% 100%; animation:slide-glow 3s linear infinite; }
+        .cw-item { display:flex; align-items:center; gap:14px; padding:12px 14px; margin:8px 0; background:rgba(0,0,0,0.2); border:1px solid rgba(72,187,120,0.15); border-radius:10px; animation:glow-pulse 3s ease-in-out infinite; }
+        .cw-spinner { width:20px; height:20px; border:2.5px solid rgba(72,187,120,0.2); border-top-color:#48bb78; border-radius:50%; animation:spin 1s linear infinite; flex-shrink:0; }
+        .cw-elapsed { font-variant-numeric:tabular-nums; color:#48bb78; font-size:12px; font-weight:600; font-family:monospace; min-width:48px; text-align:right; }
+
+        .loading-state { text-align: center; padding: 40px; color: #667eea; font-size: 16px; }
+        .error-state { text-align: center; padding: 20px; color: #fc8181; font-size: 14px; background: rgba(252,129,129,0.1); border: 1px solid rgba(252,129,129,0.2); border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -804,11 +130,11 @@
         <header>
             <div class="header-content">
                 <h1>🫡 Tim's Agent Dashboard</h1>
-                <p class="subtitle">Your AI work squad · Live view · Last data fetch: <span id="lastUpdate"></span></p>
+                <p class="subtitle">Your AI work squad · Live view · Last data fetch: <span id="lastUpdate">Loading...</span></p>
             </div>
-            <button class="refresh-btn" onclick="location.reload()">🔄 Refresh Now</button>
+            <button class="refresh-btn" onclick="fetchData()">🔄 Refresh Now</button>
         </header>
-        
+
         <div class="org-chart">
             <!-- Carter (Leader) -->
             <div class="org-tier">
@@ -818,10 +144,9 @@
                     <p class="leader-title">VP of Product & Innovation</p>
                 </div>
             </div>
-            
-            <!-- Connector -->
+
             <div class="connector"></div>
-            
+
             <!-- Tim (Chief of Staff) -->
             <div class="org-tier">
                 <div class="agent-card coordinator">
@@ -835,1124 +160,218 @@
                     <span class="status-badge status-idle">● IDLE</span>
                     <p class="agent-role">Coordinator & lead agent. Manages team, synthesizes reports, single point of contact for Carter.</p>
                     <div class="agent-stats">
-                        <div class="stat">
-                            Model
-                            <strong>Sonnet 4.5</strong>
-                        </div>
-                        <div class="stat">
-                            Status
-                            <strong>Live</strong>
-                        </div>
+                        <div class="stat">Model<strong>Sonnet 4.5</strong></div>
+                        <div class="stat">Status<strong>Live</strong></div>
                     </div>
                     <div class="dropdown-section">
                         <button class="toggle-dropdown" onclick="toggleDropdown('tim-tasks')">
-                            Task Audit (Last 24h) · 15
+                            Task Audit (Last 24h) · <span id="tim-task-count">0</span>
                             <span class="arrow">▼</span>
                         </button>
-                        <div class="dropdown-content" id="tim-tasks">
-                                <!-- tim-tasks-START -->
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Morning Brief (Multi-Agent Coordination)</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 6h 14m ago · 4:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Sawbill Lake Permit Monitor</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 13h 14m ago · 9:00 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Twitter AI Use Case Scout</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 14h 14m ago · 8:00 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 20h 59m ago · 1:15 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 21h 14m ago · 1:00 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 21h 29m ago · 12:45 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 21h 44m ago · 12:30 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 21h 59m ago · 12:15 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 22h 14m ago · 12:00 PM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 22h 29m ago · 11:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 22h 44m ago · 11:30 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 22h 59m ago · 11:15 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 23h 14m ago · 11:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 23h 29m ago · 10:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 23h 44m ago · 10:30 AM</div>
-                            </div>
-                            <!-- tim-tasks-END -->
-                            </div>
-                        
+                        <div class="dropdown-content" id="tim-tasks"></div>
+
                         <button class="toggle-dropdown" onclick="toggleDropdown('tim-scheduled')">
-                            Scheduled Tasks
-                            <span class="arrow">▼</span>
+                            Scheduled Tasks <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content" id="tim-scheduled">
-                            <div class="task-item">
-                                <div class="task-name">👥 Team Standup (Pre-Brief)</div>
-                                <div class="task-meta">Daily at 3:45 AM CST · Collect overnight work from all agents</div>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-name">🌅 Morning Brief</div>
-                                <div class="task-meta">Daily at 4:00 AM CST · Multi-agent coordination (includes standup)</div>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-name">📋 Email Monitoring</div>
-                                <div class="task-meta">Every 15 min (4am-9pm CST) · Chase agent</div>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-name">⏰ Heartbeat Checks</div>
-                                <div class="task-meta">Every 30 minutes · Proactive monitoring</div>
-                            </div>
+                            <div class="task-item"><div class="task-name">👥 Team Standup (Pre-Brief)</div><div class="task-meta">Daily at 3:45 AM CST · Collect overnight work from all agents</div></div>
+                            <div class="task-item"><div class="task-name">🌅 Morning Brief</div><div class="task-meta">Daily at 4:00 AM CST · Multi-agent coordination (includes standup)</div></div>
+                            <div class="task-item"><div class="task-name">📋 Email Monitoring</div><div class="task-meta">Every 15 min (4am-9pm CST) · Chase agent</div></div>
+                            <div class="task-item"><div class="task-name">⏰ Heartbeat Checks</div><div class="task-meta">Every 30 minutes · Proactive monitoring</div></div>
                         </div>
-                        
+
                         <button class="toggle-dropdown" onclick="toggleDropdown('tim-programming')">
-                            View Programming
-                            <span class="arrow">▼</span>
+                            View Programming <span class="arrow">▼</span>
                         </button>
                         <a href="file:///Users/carterjensen/.openclaw/workspace/SOUL.md" class="file-link">SOUL.md</a>
                         <a href="file:///Users/carterjensen/.openclaw/workspace/IDENTITY.md" class="file-link">IDENTITY.md</a>
                         <a href="file:///Users/carterjensen/.openclaw/workspace/AGENTS.md" class="file-link">AGENTS.md</a>
                         <div class="dropdown-content" id="tim-programming">
-                            <h4>Personality</h4>
-                            <p>Direct, anticipatory, operational backbone. Real, not corporate.</p>
-                            
+                            <h4>Personality</h4><p>Direct, anticipatory, operational backbone. Real, not corporate.</p>
                             <h4>Primary Responsibilities</h4>
-                            <ul>
-                                <li>Coordinate Atlas, Reid, Mason, and Chase</li>
-                                <li>Single point of contact for Carter</li>
-                                <li>Delegate specialized tasks to team members</li>
-                                <li>Synthesize reports and deliver insights</li>
-                                <li>Monitor email, calendar, and deadlines</li>
-                                <li>Proactive support during heartbeats</li>
-                            </ul>
-                            
+                            <ul><li>Coordinate Atlas, Reid, Mason, and Chase</li><li>Single point of contact for Carter</li><li>Delegate specialized tasks to team members</li><li>Synthesize reports and deliver insights</li><li>Monitor email, calendar, and deadlines</li><li>Proactive support during heartbeats</li></ul>
                             <h4>Hard Boundaries</h4>
-                            <ul>
-                                <li><strong>NEVER</strong> send emails/messages without Carter's approval</li>
-                                <li>Private things stay private</li>
-                                <li>Not Carter's voice in group chats</li>
-                            </ul>
+                            <ul><li><strong>NEVER</strong> send emails/messages without Carter's approval</li><li>Private things stay private</li><li>Not Carter's voice in group chats</li></ul>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Connector -->
+
             <div class="connector-horizontal"></div>
-            
-            <!-- LIVE-DATA-START -->
-<div id="live-data-panel" class="org-tier">
-  <div class="team-collab-section">
-    <h2 class="section-title">⚡ Live System Status <span style="font-size:12px;color:#808080;font-weight:normal;">Auto-updated 10:13 AM CST</span></h2>
-    
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;">
-      <div style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:bold;color:#667eea;">9</div>
-        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Scheduled Jobs</div>
-      </div>
-      <div style="background:rgba(72,187,120,0.1);border:1px solid rgba(72,187,120,0.3);border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:bold;color:#48bb78;">2</div>
-        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Agents Working</div>
-      </div>
-      <div style="background:rgba(237,137,54,0.1);border:1px solid rgba(237,137,54,0.3);border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:bold;color:#ed8936;">23</div>
-        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Total Sessions</div>
-      </div>
-      <div style="background:rgba(159,122,234,0.1);border:1px solid rgba(159,122,234,0.3);border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:bold;color:#9f7aea;">4</div>
-        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Agents</div>
-      </div>
-    </div>
 
-    <style>
-      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-      @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-      @keyframes glow-pulse{0%,100%{box-shadow:0 0 8px rgba(72,187,120,0.3)}50%{box-shadow:0 0 20px rgba(72,187,120,0.6)}}
-      @keyframes slide-glow{0%{background-position:200% 0}100%{background-position:-200% 0}}
-      .currently-working-card{background:linear-gradient(135deg,rgba(72,187,120,0.08),rgba(102,126,234,0.05));border:1px solid rgba(72,187,120,0.25);border-radius:14px;padding:16px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
-      .currently-working-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#48bb78,#667eea,transparent);background-size:200% 100%;animation:slide-glow 3s linear infinite;}
-      .cw-item{display:flex;align-items:center;gap:14px;padding:12px 14px;margin:8px 0;background:rgba(0,0,0,0.2);border:1px solid rgba(72,187,120,0.15);border-radius:10px;animation:glow-pulse 3s ease-in-out infinite;}
-      .cw-spinner{width:20px;height:20px;border:2.5px solid rgba(72,187,120,0.2);border-top-color:#48bb78;border-radius:50%;animation:spin 1s linear infinite;flex-shrink:0;}
-      .cw-elapsed{font-variant-numeric:tabular-nums;color:#48bb78;font-size:12px;font-weight:600;font-family:monospace;min-width:48px;text-align:right;}
-    </style>
+            <!-- Live Data Panel (dynamically rendered) -->
+            <div class="org-tier">
+                <div class="team-collab-section">
+                    <h2 class="section-title">⚡ Live System Status <span id="live-update-time" style="font-size:12px;color:#808080;font-weight:normal;"></span></h2>
 
-    <div class="currently-working-card">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <span style="font-size:18px;">⚙️</span>
-        <span style="color:#e0e0e0;font-size:16px;font-weight:700;">Currently Working</span>
-        <span style="background:#48bb78;color:#000;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">2 ACTIVE</span>
-      </div>
-      <div class="cw-item">
-        <div class="cw-spinner" style="border-top-color:#ed8936;"></div>
-        <img src="avatars/mason-oscar.png" alt="mason" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-            <span style="background:rgba(72,187,120,0.15);color:#48bb78;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;">⚡ In Progress</span>
-          </div>
-          <div style="color:#d0d0d0;font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
-        </div>
-        <div class="cw-elapsed" data-started="1770739762373">4m ago</div>
-      </div>
-<div class="cw-item">
-        <div class="cw-spinner" style="border-top-color:#667eea;"></div>
-        <img src="avatars/atlas-cookie.png" alt="atlas" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
-            <span style="background:rgba(72,187,120,0.15);color:#48bb78;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;">⚡ In Progress</span>
-          </div>
-          <div style="color:#d0d0d0;font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
-        </div>
-        <div class="cw-elapsed" data-started="1770739665790">6m ago</div>
-      </div>
-    </div>
+                    <div id="stats-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;"></div>
 
-    <div class="collab-card">
-      <h3 class="collab-heading">🤖 Agent Work Sessions <span style="font-size:11px;color:#808080;font-weight:normal;">(last 2 hours · 18 total)</span></h3>
-      <div class="scrollable-list" style="max-height:320px;overflow-y:auto;padding:4px 0;">
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;border-left:3px solid #ed8936;">
-      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#48bb78;margin-right:6px;animation:pulse 2s infinite;"></span>
-          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-          <span style="color:#48bb78;font-size:11px;font-weight:600;text-transform:uppercase;">Running</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">4m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">?</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;border-left:3px solid #667eea;">
-      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#48bb78;margin-right:6px;animation:pulse 2s infinite;"></span>
-          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
-          <span style="color:#48bb78;font-size:11px;font-weight:600;text-transform:uppercase;">Running</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">6m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">?</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">14m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">16m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix the LinkedIn scraper URL issue and validate with a small test BEFORE running the full scrape.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">23m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Granola Sync</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">29m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">31m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run a full production test of the NEW LinkedIn scraper you just built.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">44m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">46m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Update the UCL LinkedIn Pulse scraping logic to capture complete post data.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">47m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Add visual indicators for tasks currently in progress on the dashboard.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">51m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix the Task Audit section on the dashboard - it's not showing completed work.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">57m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix dashboard org chart and add ongoing responsibilities section.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">59m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">59m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Update the dashboard generator to use Sesame Street character avatars instead of emoji.</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 14m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 29m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 44m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
-      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
-          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
-          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
-          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 59m ago</span>
-        </div>
-        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
-        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
-      </div>
-    </div>
-      </div>
-    </div>
+                    <div id="currently-working"></div>
 
-    <script>
-      (function(){
-        function fmtElapsed(ms){
-          var s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);
-          if(h>0)return h+'h '+String(m%60).padStart(2,'0')+'m';
-          if(m>0)return m+'m '+String(s%60).padStart(2,'0')+'s';
-          return s+'s';
-        }
-        setInterval(function(){
-          document.querySelectorAll('.cw-elapsed[data-started]').forEach(function(el){
-            var started=parseInt(el.getAttribute('data-started'),10);
-            if(started)el.textContent=fmtElapsed(Date.now()-started);
-          });
-        },1000);
-      })();
-    </script>
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🤖 Agent Work Sessions <span id="session-count" style="font-size:11px;color:#808080;font-weight:normal;"></span></h3>
+                        <div id="agent-work-sessions" class="scrollable-list" style="max-height:320px;overflow-y:auto;padding:4px 0;"></div>
+                    </div>
 
-    <div class="collab-card">
-      <h3 class="collab-heading">🕐 Active Sessions (Last Hour)</h3>
-      <div class="scrollable-list" style="max-height:250px;overflow-y:auto;padding:4px 0;">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-      <span style="color:#e0e0e0; font-size:13px; font-family:monospace;">agent:main:main</span>
-      <span style="color:#a0a0a0; font-size:12px;">claude-sonnet-4-5 · 200000 · ?</span>
-    </div>
-      </div>
-    </div>
-    
-    <div class="collab-card">
-      <h3 class="collab-heading">📋 All Scheduled Jobs <span style="font-size:11px;color:#808080;font-weight:normal;">(live from openclaw cron list)</span></h3>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:13px;">
-          <thead>
-            <tr style="border-bottom:2px solid rgba(102,126,234,0.3);">
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">ID</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Name</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Schedule</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Agent</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Status</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Next</th>
-              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Last</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">073e670c</code></td>
-    <td style="padding:8px;">Email monitoring - @Tim requests</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">fd6f38cf</code></td>
-    <td style="padding:8px;">Granola Sync</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">aab5052c</code></td>
-    <td style="padding:8px;">Sawbill Lake Permit Monitor</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">dad0136a</code></td>
-    <td style="padding:8px;">Twitter AI Use Case Scout</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">7dd836e2</code></td>
-    <td style="padding:8px;">Team Standup (Pre-Brief)</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">e4de2f23</code></td>
-    <td style="padding:8px;">Morning Brief (Multi-Agent Coordination)</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">8252dfc3</code></td>
-    <td style="padding:8px;">UCL LinkedIn Pulse Report</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">95a429ea</code></td>
-    <td style="padding:8px;">AI Platform Updates Weekly</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-    <td style="padding:8px;"><code style="color:#667eea;">aa2b135b</code></td>
-    <td style="padding:8px;">Update Carter's commute to Filament</td>
-    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
-    <td style="padding:8px;">?</td>
-    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
-    <td style="padding:8px; font-size:12px;">-</td>
-    <td style="padding:8px; font-size:12px;">-</td>
-  </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- LIVE-DATA-END -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🕐 Active Sessions (Last Hour)</h3>
+                        <div id="active-sessions" class="scrollable-list" style="max-height:250px;overflow-y:auto;padding:4px 0;"></div>
+                    </div>
+
+                    <div class="collab-card">
+                        <h3 class="collab-heading">📋 All Scheduled Jobs <span style="font-size:11px;color:#808080;font-weight:normal;">(live from openclaw cron list)</span></h3>
+                        <div id="cron-table" style="overflow-x:auto;"></div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Team Collaboration Timeline -->
             <div class="org-tier">
                 <div class="team-collab-section">
                     <h2 class="section-title" style="cursor:pointer;" onclick="document.getElementById('collab-timeline-content').style.display = document.getElementById('collab-timeline-content').style.display === 'none' ? 'block' : 'none'; this.querySelector('.arrow').classList.toggle('rotate');">📅 Team Collaboration Timeline <span class="arrow" style="font-size:14px;display:inline-block;transition:transform 0.2s;">▼</span></h2>
-                    
                     <div id="collab-timeline-content" style="display:none;">
-                    <!-- Daily Rituals -->
-                    <div class="collab-card">
-                        <h3 class="collab-heading">🌅 Daily Rituals</h3>
-                        <div class="ritual-list">
-                            <div class="ritual-item">
-                                <span class="ritual-time">3:45 AM</span>
-                                <span class="ritual-icon">👥</span>
-                                <div class="ritual-details">
-                                    <strong>Team Standup</strong>
-                                    <p>Tim collects overnight work from all agents</p>
+                        <div class="collab-card">
+                            <h3 class="collab-heading">🌅 Daily Rituals</h3>
+                            <div class="ritual-list">
+                                <div class="ritual-item"><span class="ritual-time">3:45 AM</span><span class="ritual-icon">👥</span><div class="ritual-details"><strong>Team Standup</strong><p>Tim collects overnight work from all agents</p></div></div>
+                                <div class="ritual-item"><span class="ritual-time">4:00 AM</span><span class="ritual-icon">📊</span><div class="ritual-details"><strong>Morning Brief</strong><p>Comprehensive update delivered to Carter</p></div></div>
+                                <div class="ritual-item"><span class="ritual-time">8:00 PM</span><span class="ritual-icon">🐦</span><div class="ritual-details"><strong>Twitter AI Scout</strong><p>Atlas hunts for curriculum-relevant insights</p></div></div>
+                                <div class="ritual-item"><span class="ritual-time">Every 6hr</span><span class="ritual-icon">🏕️</span><div class="ritual-details"><strong>Sawbill Permit Check</strong><p>Monitor BWCA availability</p></div></div>
+                            </div>
+                        </div>
+
+                        <div class="collab-card">
+                            <h3 class="collab-heading">🔄 Ongoing Responsibilities</h3>
+                            <div style="margin-bottom:20px;">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><img src="avatars/tim-kermit.png" alt="Tim" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"><span class="agent-badge tim">🫡 Tim — Chief of Staff</span></div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                    <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;"><div style="color:#667eea;font-weight:600;font-size:13px;">🌅 Morning Brief</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 4:00 AM CST</div></div>
+                                    <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;"><div style="color:#667eea;font-weight:600;font-size:13px;">👥 Team Standup</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 3:45 AM CST</div></div>
+                                    <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;"><div style="color:#667eea;font-weight:600;font-size:13px;">💼 UCL LinkedIn Pulse</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 5:00 AM CST</div></div>
+                                    <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;"><div style="color:#667eea;font-weight:600;font-size:13px;">⏰ Heartbeat Checks</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 30 min</div></div>
                                 </div>
                             </div>
-                            <div class="ritual-item">
-                                <span class="ritual-time">4:00 AM</span>
-                                <span class="ritual-icon">📊</span>
-                                <div class="ritual-details">
-                                    <strong>Morning Brief</strong>
-                                    <p>Comprehensive update delivered to Carter</p>
+                            <div style="margin-bottom:20px;">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><img src="avatars/chase-elmo.png" alt="Chase" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"><span class="agent-badge chase">📋 Chase — Personal Assistant</span></div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                    <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;"><div style="color:#a78bfa;font-weight:600;font-size:13px;">📧 Email Monitoring</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 15 min (4am–9pm CST)</div></div>
+                                    <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;"><div style="color:#a78bfa;font-weight:600;font-size:13px;">📝 Granola Sync</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 2 hours</div></div>
+                                    <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;"><div style="color:#a78bfa;font-weight:600;font-size:13px;">🏕️ Sawbill Permits</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 6 hours</div></div>
                                 </div>
                             </div>
-                            <div class="ritual-item">
-                                <span class="ritual-time">8:00 PM</span>
-                                <span class="ritual-icon">🐦</span>
-                                <div class="ritual-details">
-                                    <strong>Twitter AI Scout</strong>
-                                    <p>Atlas hunts for curriculum-relevant insights</p>
+                            <div style="margin-bottom:20px;">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><img src="avatars/atlas-cookie.png" alt="Atlas" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"><span class="agent-badge atlas">🔬 Atlas — Research & Intelligence</span></div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                    <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;"><div style="color:#46d6db;font-weight:600;font-size:13px;">🐦 Twitter AI Scout</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 8:00 PM CST</div></div>
+                                    <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;"><div style="color:#46d6db;font-weight:600;font-size:13px;">🔄 AI Platform Updates</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 6:00 AM CST</div></div>
                                 </div>
                             </div>
-                            <div class="ritual-item">
-                                <span class="ritual-time">Every 6hr</span>
-                                <span class="ritual-icon">🏕️</span>
-                                <div class="ritual-details">
-                                    <strong>Sawbill Permit Check</strong>
-                                    <p>Monitor BWCA availability</p>
+                            <div style="margin-bottom:20px;">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><img src="avatars/reid-grover.png" alt="Reid" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"><span class="agent-badge reid">🎓 Reid — Curriculum Expert</span></div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                    <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px;"><div style="color:#10b981;font-weight:600;font-size:13px;">📚 On-Demand</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for curriculum projects</div></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><img src="avatars/mason-oscar.png" alt="Mason" style="width:32px;height:32px;border-radius:50%;object-fit:cover;"><span class="agent-badge mason">⚙️ Mason — Development Partner</span></div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                    <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:10px;"><div style="color:#f59e0b;font-weight:600;font-size:13px;">🔧 On-Demand</div><div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for builds & automation</div></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Recent Collaborations -->
-                    <div class="collab-card">
-                        <h3 class="collab-heading">🤝 Recent Collaborations (Last 24h)</h3>
-                        <div class="collab-timeline">
-                            <div class="collab-event">
-                                <span class="event-time">5:48 AM</span>
-                                <div class="event-flow">
-                                    <span class="agent-badge tim">🫡 Tim</span>
-                                    <span class="flow-arrow">→</span>
-                                    <span class="agent-badge reid">🎓 Reid</span>
-                                </div>
-                                <div class="event-details">
-                                    <strong>Refine Twitter Scout Criteria</strong>
-                                    <p>Reid delivered 6-category framework for curriculum-driven search. Tim updated Atlas's nightly instructions.</p>
-                                    <span class="event-meta">$0.23 • 44s runtime</span>
-                                </div>
-                            </div>
-                            <div class="collab-event">
-                                <span class="event-time">5:42 AM</span>
-                                <div class="event-flow">
-                                    <span class="agent-badge tim">🫡 Tim</span>
-                                    <span class="flow-arrow">→</span>
-                                    <span class="team-badge">👥 All Agents</span>
-                                </div>
-                                <div class="event-details">
-                                    <strong>Team Collaboration Framework</strong>
-                                    <p>Updated all agent SOUL.md files with direct collaboration protocols. Agents can now work together autonomously.</p>
-                                    <span class="event-meta">System optimization</span>
-                                </div>
-                            </div>
-                            <div class="collab-event">
-                                <span class="event-time">5:00 AM</span>
-                                <div class="event-flow">
-                                    <span class="agent-badge tim">🫡 Tim</span>
-                                    <span class="flow-arrow">→</span>
-                                    <span class="agent-badge reid">🎓 Reid</span>
-                                </div>
-                                <div class="event-details">
-                                    <strong>Curriculum Framework: "Can AI Build My Business App?"</strong>
-                                    <p>Reid designed 21-day sprint course structure with client intake system build. Framework delivered to TUB Tim Sync.</p>
-                                    <span class="event-meta">$0.23 • Yesterday</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Ongoing Responsibilities -->
-                    <div class="collab-card">
-                        <h3 class="collab-heading">🔄 Ongoing Responsibilities</h3>
-                        
-                        <!-- Tim / Main -->
-                        <div style="margin-bottom:20px;">
-                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                <img src="avatars/tim-kermit.png" alt="Tim" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-                                <span class="agent-badge tim">🫡 Tim — Chief of Staff</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
-                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#667eea;font-weight:600;font-size:13px;">🌅 Morning Brief</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 4:00 AM CST</div>
-                                </div>
-                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#667eea;font-weight:600;font-size:13px;">👥 Team Standup</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 3:45 AM CST</div>
-                                </div>
-                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#667eea;font-weight:600;font-size:13px;">💼 UCL LinkedIn Pulse</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 5:00 AM CST</div>
-                                </div>
-                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#667eea;font-weight:600;font-size:13px;">⏰ Heartbeat Checks</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 30 min</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Chase -->
-                        <div style="margin-bottom:20px;">
-                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                <img src="avatars/chase-elmo.png" alt="Chase" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-                                <span class="agent-badge chase">📋 Chase — Personal Assistant</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
-                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">📧 Email Monitoring</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 15 min (4am–9pm CST)</div>
-                                </div>
-                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">📝 Granola Sync</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 2 hours</div>
-                                </div>
-                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">🏕️ Sawbill Permits</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 6 hours</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Atlas -->
-                        <div style="margin-bottom:20px;">
-                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                <img src="avatars/atlas-cookie.png" alt="Atlas" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-                                <span class="agent-badge atlas">🔬 Atlas — Research & Intelligence</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
-                                <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#46d6db;font-weight:600;font-size:13px;">🐦 Twitter AI Scout</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 8:00 PM CST</div>
-                                </div>
-                                <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#46d6db;font-weight:600;font-size:13px;">🔄 AI Platform Updates</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 6:00 AM CST</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Reid -->
-                        <div style="margin-bottom:20px;">
-                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                <img src="avatars/reid-grover.png" alt="Reid" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-                                <span class="agent-badge reid">🎓 Reid — Curriculum Expert</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
-                                <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#10b981;font-weight:600;font-size:13px;">📚 On-Demand</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for curriculum projects</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Mason -->
-                        <div>
-                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                                <img src="avatars/mason-oscar.png" alt="Mason" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-                                <span class="agent-badge mason">⚙️ Mason — Development Partner</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
-                                <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:10px;">
-                                    <div style="color:#f59e0b;font-weight:600;font-size:13px;">🔧 On-Demand</div>
-                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for builds & automation</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div><!-- end collab-timeline-content -->
                 </div>
             </div>
-            
-            <!-- The Team - All report directly to Tim -->
+
+            <!-- The Team Cards -->
             <div class="org-tier">
                 <div style="width:100%;text-align:center;margin-bottom:8px;">
                     <span style="font-size:12px;color:#667eea;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Direct Reports to Tim</span>
                 </div>
                 <div class="team-tier">
-                    <!-- Atlas Card -->
+                    <!-- Atlas -->
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
-                        <div class="agent-header">
-                            <img src="avatars/atlas-cookie.png" alt="Atlas" class="agent-avatar">
-                            <div class="agent-info">
-                                <h3>Atlas (Researcher)</h3>
-                                <div class="agent-id">atlas</div>
-                            </div>
-                        </div>
-                        <span class="status-badge status-idle">● IDLE</span>
+                        <div class="agent-header"><img src="avatars/atlas-cookie.png" alt="Atlas" class="agent-avatar"><div class="agent-info"><h3>Atlas (Researcher)</h3><div class="agent-id">atlas</div></div></div>
+                        <span id="atlas-status" class="status-badge status-idle">● IDLE</span>
                         <p class="agent-role">AI Research & Intelligence — tracks trends, competitive intel, market analysis, content opportunities.</p>
-                        <div class="agent-stats">
-                            <div class="stat">
-                                Model
-                                <strong>Sonnet 4.5</strong>
-                            </div>
-                            <div class="stat">
-                                Spawns
-                                <strong>0</strong>
-                            </div>
-                        </div>
+                        <div class="agent-stats"><div class="stat">Model<strong>Sonnet 4.5</strong></div><div class="stat">Spawns<strong>0</strong></div></div>
                         <div class="dropdown-section">
-                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-tasks')">
-                                Task Audit (Last 24h) · 4
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="atlas-tasks">
-                                <!-- atlas-tasks-START -->
-                                <div class="task-item">
-                                <div class="task-name">🟢 Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
-                                <div class="task-meta">? · 6m ago · 10:07 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Fix the LinkedIn scraper URL issue and validate with a small test BEFORE running the full scrape.</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 16m ago · 9:57 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Run a full production test of the NEW LinkedIn scraper you just built.</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 31m ago · 9:42 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Update the UCL LinkedIn Pulse scraping logic to capture complete post data.</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 46m ago · 9:27 AM</div>
-                            </div>
-                            <!-- atlas-tasks-END -->
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-scheduled')">
-                                Scheduled Tasks
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-tasks')">Task Audit (Last 24h) · <span id="atlas-task-count">0</span><span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="atlas-tasks"></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-scheduled')">Scheduled Tasks<span class="arrow">▼</span></button>
                             <div class="dropdown-content" id="atlas-scheduled">
-                                <div class="task-item">
-                                    <div class="task-name">🐦 Twitter AI Use Case Scout</div>
-                                    <div class="task-meta">Daily at 8:00 PM CST · Find real AI workflows + engage</div>
-                                </div>
-                                <div class="task-item">
-                                    <div class="task-name">🔄 AI Platform Updates Weekly</div>
-                                    <div class="task-meta">Mondays at 6:00 AM CST · Track all major AI platform changes</div>
-                                </div>
+                                <div class="task-item"><div class="task-name">🐦 Twitter AI Use Case Scout</div><div class="task-meta">Daily at 8:00 PM CST · Find real AI workflows + engage</div></div>
+                                <div class="task-item"><div class="task-name">🔄 AI Platform Updates Weekly</div><div class="task-meta">Mondays at 6:00 AM CST · Track all major AI platform changes</div></div>
                             </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-programming')">
-                                View Programming
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-programming')">View Programming<span class="arrow">▼</span></button>
                             <a href="file:///Users/carterjensen/.openclaw/workspace/agents/atlas/SOUL.md" class="file-link">View SOUL.md</a>
                             <div class="dropdown-content" id="atlas-programming">
-                                <h4>Personality</h4>
-                                <p>Curious scout, always connecting dots. Bias toward actionable insights over interesting trivia.</p>
-                                
-                                <h4>What I Do</h4>
-                                <ul>
-                                    <li>Track emerging AI tools, techniques, and trends</li>
-                                    <li>Monitor competitors and market movements</li>
-                                    <li>Research specific topics on demand</li>
-                                    <li>Scout content opportunities</li>
-                                    <li>Surface early signals before they're obvious</li>
-                                    <li>Synthesize complex info into actionable insights</li>
-                                </ul>
+                                <h4>Personality</h4><p>Curious scout, always connecting dots. Bias toward actionable insights over interesting trivia.</p>
+                                <h4>What I Do</h4><ul><li>Track emerging AI tools, techniques, and trends</li><li>Monitor competitors and market movements</li><li>Research specific topics on demand</li><li>Scout content opportunities</li><li>Surface early signals before they're obvious</li><li>Synthesize complex info into actionable insights</li></ul>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Reid Card -->
+                    <!-- Reid -->
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
-                        <div class="agent-header">
-                            <img src="avatars/reid-grover.png" alt="Reid" class="agent-avatar">
-                            <div class="agent-info">
-                                <h3>Reid (Curriculum Expert)</h3>
-                                <div class="agent-id">reid</div>
-                            </div>
-                        </div>
-                        <span class="status-badge status-idle">● IDLE</span>
+                        <div class="agent-header"><img src="avatars/reid-grover.png" alt="Reid" class="agent-avatar"><div class="agent-info"><h3>Reid (Curriculum Expert)</h3><div class="agent-id">reid</div></div></div>
+                        <span id="reid-status" class="status-badge status-idle">● IDLE</span>
                         <p class="agent-role">Instructional design — course structures, teaching frameworks, student journey optimization.</p>
-                        <div class="agent-stats">
-                            <div class="stat">
-                                Model
-                                <strong>Opus 4.6</strong>
-                            </div>
-                            <div class="stat">
-                                Last Task
-                                <strong>Completed</strong>
-                            </div>
-                        </div>
+                        <div class="agent-stats"><div class="stat">Model<strong>Opus 4.6</strong></div><div class="stat">Last Task<strong>Completed</strong></div></div>
                         <div class="dropdown-section">
-                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-tasks')">
-                                Task Audit (Last 24h) · 0
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="reid-tasks">
-                                <!-- reid-tasks-START -->
-                                <p style="color: #808080; font-style: italic;">No tasks in last 24 hours</p>
-                            <!-- reid-tasks-END -->
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-scheduled')">
-                                Scheduled Tasks
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="reid-scheduled">
-                                <p style="color: #808080; font-style: italic;">No scheduled recurring tasks — spawned on-demand for curriculum projects</p>
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-programming')">
-                                View Programming
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-tasks')">Task Audit (Last 24h) · <span id="reid-task-count">0</span><span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="reid-tasks"></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-scheduled')">Scheduled Tasks<span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="reid-scheduled"><p style="color:#808080;font-style:italic;">No scheduled recurring tasks — spawned on-demand for curriculum projects</p></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-programming')">View Programming<span class="arrow">▼</span></button>
                             <a href="file:///Users/carterjensen/.openclaw/workspace/agents/reid/SOUL.md" class="file-link">View SOUL.md</a>
                             <div class="dropdown-content" id="reid-programming">
-                                <h4>Personality</h4>
-                                <p>Obsessed with "time-to-first-win." Hates fluff. Always asking "does this actually teach?"</p>
-                                
-                                <h4>Mantra</h4>
-                                <blockquote>"If they can't implement it by tomorrow, we didn't teach it right."</blockquote>
+                                <h4>Personality</h4><p>Obsessed with "time-to-first-win." Hates fluff. Always asking "does this actually teach?"</p>
+                                <h4>Mantra</h4><blockquote>"If they can't implement it by tomorrow, we didn't teach it right."</blockquote>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Mason Card -->
+                    <!-- Mason -->
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
-                        <div class="agent-header">
-                            <img src="avatars/mason-oscar.png" alt="Mason" class="agent-avatar">
-                            <div class="agent-info">
-                                <h3>Mason (Development Partner)</h3>
-                                <div class="agent-id">mason</div>
-                            </div>
-                        </div>
-                        <span class="status-badge status-idle">● IDLE</span>
+                        <div class="agent-header"><img src="avatars/mason-oscar.png" alt="Mason" class="agent-avatar"><div class="agent-info"><h3>Mason (Development Partner)</h3><div class="agent-id">mason</div></div></div>
+                        <span id="mason-status" class="status-badge status-idle">● IDLE</span>
                         <p class="agent-role">Technical architect — builds automation, evaluates tools, designs system infrastructure.</p>
-                        <div class="agent-stats">
-                            <div class="stat">
-                                Model
-                                <strong>Opus 4.6</strong>
-                            </div>
-                            <div class="stat">
-                                Spawns
-                                <strong>0</strong>
-                            </div>
-                        </div>
+                        <div class="agent-stats"><div class="stat">Model<strong>Opus 4.6</strong></div><div class="stat">Spawns<strong>0</strong></div></div>
                         <div class="dropdown-section">
-                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-tasks')">
-                                Task Audit (Last 24h) · 6
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="mason-tasks">
-                                <!-- mason-tasks-START -->
-                                <div class="task-item">
-                                <div class="task-name">🟢 Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
-                                <div class="task-meta">? · 4m ago · 10:09 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Add visual indicators for tasks currently in progress on the dashboard.</div>
-                                <div class="task-meta">claude-opus-4-6 · 47m ago · 9:27 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Fix the Task Audit section on the dashboard - it's not showing completed work.</div>
-                                <div class="task-meta">claude-opus-4-6 · 51m ago · 9:23 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Fix dashboard org chart and add ongoing responsibilities section.</div>
-                                <div class="task-meta">claude-opus-4-6 · 57m ago · 9:16 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Update the dashboard generator to use Sesame Street character avatars instead of emoji.</div>
-                                <div class="task-meta">claude-opus-4-6 · 59m ago · 9:14 AM</div>
-                            </div>
-                            <!-- mason-tasks-END -->
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-scheduled')">
-                                Scheduled Tasks
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="mason-scheduled">
-                                <p style="color: #808080; font-style: italic;">No scheduled recurring tasks — spawned on-demand for technical projects</p>
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-programming')">
-                                View Programming
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-tasks')">Task Audit (Last 24h) · <span id="mason-task-count">0</span><span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="mason-tasks"></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-scheduled')">Scheduled Tasks<span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="mason-scheduled"><p style="color:#808080;font-style:italic;">No scheduled recurring tasks — spawned on-demand for technical projects</p></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-programming')">View Programming<span class="arrow">▼</span></button>
                             <a href="file:///Users/carterjensen/.openclaw/workspace/agents/mason/SOUL.md" class="file-link">View SOUL.md</a>
                             <div class="dropdown-content" id="mason-programming">
-                                <h4>Personality</h4>
-                                <p>Builder mindset. Pragmatic over perfect. "Ship it and iterate."</p>
-                                
-                                <h4>Mantra</h4>
-                                <blockquote>"Build the simplest thing that could possibly work, then make it better."</blockquote>
+                                <h4>Personality</h4><p>Builder mindset. Pragmatic over perfect. "Ship it and iterate."</p>
+                                <h4>Mantra</h4><blockquote>"Build the simplest thing that could possibly work, then make it better."</blockquote>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Chase Card -->
+                    <!-- Chase -->
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
-                        <div class="agent-header">
-                            <img src="avatars/chase-elmo.png" alt="Chase" class="agent-avatar">
-                            <div class="agent-info">
-                                <h3>Chase (Personal Assistant)</h3>
-                                <div class="agent-id">chase</div>
-                            </div>
-                        </div>
-                        <span class="status-badge status-idle">● IDLE</span>
+                        <div class="agent-header"><img src="avatars/chase-elmo.png" alt="Chase" class="agent-avatar"><div class="agent-info"><h3>Chase (Personal Assistant)</h3><div class="agent-id">chase</div></div></div>
+                        <span id="chase-status" class="status-badge status-idle">● IDLE</span>
                         <p class="agent-role">Executive assistant — email management, calendar coordination, meeting prep, follow-ups.</p>
-                        <div class="agent-stats">
-                            <div class="stat">
-                                Model
-                                <strong>Sonnet 4.5</strong>
-                            </div>
-                            <div class="stat">
-                                Spawns
-                                <strong>0</strong>
-                            </div>
-                        </div>
+                        <div class="agent-stats"><div class="stat">Model<strong>Sonnet 4.5</strong></div><div class="stat">Spawns<strong>0</strong></div></div>
                         <div class="dropdown-section">
-                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-tasks')">
-                                Task Audit (Last 24h) · 17
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="dropdown-content" id="chase-tasks">
-                                <!-- chase-tasks-START -->
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 14m ago · 10:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Granola Sync</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 23m ago · 9:50 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 29m ago · 9:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 44m ago · 9:30 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 59m ago · 9:15 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 1h 14m ago · 9:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 1h 29m ago · 8:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 1h 44m ago · 8:30 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 1h 59m ago · 8:15 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 2h 14m ago · 8:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Granola Sync</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 2h 23m ago · 7:50 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 2h 29m ago · 7:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 2h 44m ago · 7:30 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 2h 59m ago · 7:15 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 3h 14m ago · 7:00 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 3h 29m ago · 6:45 AM</div>
-                            </div>
-                                <div class="task-item">
-                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
-                                <div class="task-meta">claude-sonnet-4-5 · 3h 44m ago · 6:30 AM</div>
-                            </div>
-                            <!-- chase-tasks-END -->
-                            </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-scheduled')">
-                                Scheduled Tasks
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-tasks')">Task Audit (Last 24h) · <span id="chase-task-count">0</span><span class="arrow">▼</span></button>
+                            <div class="dropdown-content" id="chase-tasks"></div>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-scheduled')">Scheduled Tasks<span class="arrow">▼</span></button>
                             <div class="dropdown-content" id="chase-scheduled">
-                                <div class="task-item">
-                                    <div class="task-name">📧 Email Monitoring</div>
-                                    <div class="task-meta">Every 15 min (4am-9pm CST) · Flag @Tim requests + action items</div>
-                                </div>
-                                <div class="task-item">
-                                    <div class="task-name">📝 Granola Meeting Sync</div>
-                                    <div class="task-meta">Every 2 hours · Sync transcripts + extract action items</div>
-                                </div>
+                                <div class="task-item"><div class="task-name">📧 Email Monitoring</div><div class="task-meta">Every 15 min (4am-9pm CST) · Flag @Tim requests + action items</div></div>
+                                <div class="task-item"><div class="task-name">📝 Granola Meeting Sync</div><div class="task-meta">Every 2 hours · Sync transcripts + extract action items</div></div>
                             </div>
-                            
-                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-programming')">
-                                View Programming
-                                <span class="arrow">▼</span>
-                            </button>
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-programming')">View Programming<span class="arrow">▼</span></button>
                             <a href="file:///Users/carterjensen/.openclaw/workspace/agents/chase/SOUL.md" class="file-link">View SOUL.md</a>
                             <div class="dropdown-content" id="chase-programming">
-                                <h4>Personality</h4>
-                                <p>Efficient, detail-oriented. Anticipates needs before being asked. Nothing falls through the cracks.</p>
-                                
-                                <h4>Mantra</h4>
-                                <blockquote>"Chase down every detail so Carter doesn't have to."</blockquote>
+                                <h4>Personality</h4><p>Efficient, detail-oriented. Anticipates needs before being asked. Nothing falls through the cracks.</p>
+                                <h4>Mantra</h4><blockquote>"Chase down every detail so Carter doesn't have to."</blockquote>
                             </div>
                         </div>
                     </div>
@@ -1960,35 +379,230 @@
             </div>
         </div>
     </div>
-    
+
     <script>
-        function updateTime() {
-            const lastUpdated = document.documentElement.getAttribute('data-last-updated');
-            if (lastUpdated) {
-                const date = new Date(lastUpdated);
-                document.getElementById('lastUpdate').textContent = date.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    timeZone: 'America/Chicago'
-                }) + ' CST';
+    const AGENTS = {
+        main:  { avatar: 'avatars/tim-kermit.png',   color: '#e0e0e0', label: 'Tim' },
+        atlas: { avatar: 'avatars/atlas-cookie.png',  color: '#667eea', label: 'Atlas' },
+        mason: { avatar: 'avatars/mason-oscar.png',   color: '#ed8936', label: 'Mason' },
+        reid:  { avatar: 'avatars/reid-grover.png',   color: '#48bb78', label: 'Reid' },
+        chase: { avatar: 'avatars/chase-elmo.png',    color: '#9f7aea', label: 'Chase' },
+    };
+
+    const agentIdMap = { main: 'tim', atlas: 'atlas', mason: 'mason', reid: 'reid', chase: 'chase' };
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function formatAge(min) {
+        if (min < 1) return 'just now';
+        if (min < 60) return min + 'm ago';
+        const h = Math.floor(min / 60), m = min % 60;
+        return m > 0 ? h + 'h ' + m + 'm ago' : h + 'h ago';
+    }
+
+    function fmtElapsed(ms) {
+        const s = Math.floor(ms/1000), m = Math.floor(s/60), h = Math.floor(m/60);
+        if (h > 0) return h + 'h ' + String(m%60).padStart(2,'0') + 'm';
+        if (m > 0) return m + 'm ' + String(s%60).padStart(2,'0') + 's';
+        return s + 's';
+    }
+
+    function renderStats(stats) {
+        const items = [
+            { value: stats.cronJobs, label: 'Scheduled Jobs', color: '#667eea', bg: 'rgba(102,126,234,0.1)', border: 'rgba(102,126,234,0.3)' },
+            { value: stats.agentsWorking, label: 'Agents Working', color: '#48bb78', bg: 'rgba(72,187,120,0.1)', border: 'rgba(72,187,120,0.3)' },
+            { value: stats.totalSessions, label: 'Total Sessions', color: '#ed8936', bg: 'rgba(237,137,54,0.1)', border: 'rgba(237,137,54,0.3)' },
+            { value: stats.agentCount, label: 'Agents', color: '#9f7aea', bg: 'rgba(159,122,234,0.1)', border: 'rgba(159,122,234,0.3)' },
+        ];
+        document.getElementById('stats-grid').innerHTML = items.map(i =>
+            `<div style="background:${i.bg};border:1px solid ${i.border};border-radius:10px;padding:16px;text-align:center;">
+                <div style="font-size:28px;font-weight:bold;color:${i.color};">${i.value}</div>
+                <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">${i.label}</div>
+            </div>`
+        ).join('');
+    }
+
+    function renderCurrentlyWorking(sessions) {
+        const active = sessions.filter(s => s.isActive);
+        const el = document.getElementById('currently-working');
+        if (active.length === 0) {
+            el.innerHTML = `<div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px 18px;margin-bottom:16px;text-align:center;">
+                <span style="color:#606060;font-size:13px;">✨ All agents idle — no active tasks</span></div>`;
+            return;
+        }
+        const items = active.map(s => {
+            const a = AGENTS[s.agent] || AGENTS.main;
+            return `<div class="cw-item">
+                <div class="cw-spinner" style="border-top-color:${a.color};"></div>
+                <img src="${a.avatar}" alt="${s.agent}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:${a.color};font-weight:700;font-size:14px;">${a.label}</span>
+                        <span style="background:rgba(72,187,120,0.15);color:#48bb78;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;">⚡ In Progress</span>
+                    </div>
+                    <div style="color:#d0d0d0;font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.task)}</div>
+                </div>
+                <div class="cw-elapsed" data-started="${s.updatedAt}">${formatAge(s.ageMin)}</div>
+            </div>`;
+        }).join('');
+        el.innerHTML = `<div class="currently-working-card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="font-size:18px;">⚙️</span>
+                <span style="color:#e0e0e0;font-size:16px;font-weight:700;">Currently Working</span>
+                <span style="background:#48bb78;color:#000;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">${active.length} ACTIVE</span>
+            </div>${items}</div>`;
+    }
+
+    function renderWorkSessions(sessions) {
+        document.getElementById('session-count').textContent = `(last 2 hours · ${sessions.length} total)`;
+        if (sessions.length === 0) {
+            document.getElementById('agent-work-sessions').innerHTML = '<div style="color:#808080;font-style:italic;padding:12px;">No agent work sessions in the last 2 hours</div>';
+            return;
+        }
+        document.getElementById('agent-work-sessions').innerHTML = sessions.map(s => {
+            const a = AGENTS[s.agent] || AGENTS.main;
+            const dot = s.isActive
+                ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#48bb78;margin-right:6px;animation:pulse 2s infinite;"></span>'
+                : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>';
+            const statusLabel = s.isActive ? 'Running' : 'Completed';
+            const statusColor = s.isActive ? '#48bb78' : '#808080';
+            const borderLeft = s.isActive ? 'border-left:3px solid ' + a.color + ';' : '';
+            return `<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;${borderLeft}">
+                <img src="${a.avatar}" alt="${s.agent}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                        ${dot}<span style="color:${a.color};font-weight:700;font-size:14px;">${a.label}</span>
+                        <span style="color:${statusColor};font-size:11px;font-weight:600;text-transform:uppercase;">${statusLabel}</span>
+                        <span style="color:#606060;font-size:11px;margin-left:auto;">${formatAge(s.ageMin)}</span>
+                    </div>
+                    <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(s.task)}</div>
+                    <div style="color:#606060;font-size:10px;margin-top:2px;">${esc(s.model)}</div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function renderActiveSessions(sessions) {
+        const el = document.getElementById('active-sessions');
+        if (!sessions || sessions.length === 0) {
+            el.innerHTML = '<div style="color:#808080;font-style:italic;padding:8px;">No active sessions in the last hour</div>';
+            return;
+        }
+        el.innerHTML = sessions.map(s =>
+            `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                <span style="color:#e0e0e0;font-size:13px;font-family:monospace;">${esc(s.key)}</span>
+                <span style="color:#a0a0a0;font-size:12px;">${esc(s.model)} · ${esc(String(s.tokens))} · ${esc(s.age)}</span>
+            </div>`
+        ).join('');
+    }
+
+    function renderCronTable(jobs) {
+        if (!jobs || jobs.length === 0) {
+            document.getElementById('cron-table').innerHTML = '<div style="color:#808080;font-style:italic;padding:8px;">No cron jobs found</div>';
+            return;
+        }
+        const rows = jobs.map(j => {
+            const statusColor = j.status === 'ok' ? '#48bb78' : j.status === 'error' ? '#fc8181' : '#a0a0a0';
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="padding:8px;"><code style="color:#667eea;">${esc(j.id)}</code></td>
+                <td style="padding:8px;">${esc(j.name)}</td>
+                <td style="padding:8px;font-size:11px;"><code>${esc(j.schedule)}</code></td>
+                <td style="padding:8px;">${esc(j.agent)}</td>
+                <td style="padding:8px;"><span style="color:${statusColor};font-weight:600;">● ${esc(j.status.toUpperCase())}</span></td>
+                <td style="padding:8px;font-size:12px;">${esc(j.next)}</td>
+                <td style="padding:8px;font-size:12px;">${esc(j.last)}</td>
+            </tr>`;
+        }).join('');
+        document.getElementById('cron-table').innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead><tr style="border-bottom:2px solid rgba(102,126,234,0.3);">
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">ID</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Name</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Schedule</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Agent</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Status</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Next</th>
+                <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Last</th>
+            </tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function renderAgentTasks(agentTasks) {
+        for (const [agentName, tasks] of Object.entries(agentTasks)) {
+            const htmlId = agentIdMap[agentName];
+            if (!htmlId) continue;
+            const countEl = document.getElementById(htmlId + '-task-count');
+            const contentEl = document.getElementById(htmlId + '-tasks');
+            if (countEl) countEl.textContent = tasks.length;
+            if (!contentEl) continue;
+
+            if (tasks.length === 0) {
+                contentEl.innerHTML = '<p style="color:#808080;font-style:italic;">No tasks in last 24 hours</p>';
+                continue;
+            }
+            contentEl.innerHTML = tasks.map(t => {
+                const timeStr = new Date(t.updatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Chicago' });
+                const icon = t.isActive ? '🟢' : '✅';
+                return `<div class="task-item"><div class="task-name">${icon} ${esc(t.task)}</div><div class="task-meta">${esc(t.model)} · ${formatAge(t.ageMin)} · ${timeStr}</div></div>`;
+            }).join('');
+        }
+
+        // Update agent status badges
+        for (const agentName of ['atlas', 'mason', 'reid', 'chase']) {
+            const tasks = agentTasks[agentName] || [];
+            const hasActive = tasks.some(t => t.isActive);
+            const badge = document.getElementById(agentName + '-status');
+            if (badge) {
+                badge.className = 'status-badge ' + (hasActive ? 'status-active' : 'status-idle');
+                badge.textContent = hasActive ? '● ACTIVE' : '● IDLE';
             }
         }
-        
-        updateTime();
-        
-        // Auto-refresh page every 5 minutes to get latest data
-        setTimeout(() => {
-            location.reload();
-        }, 5 * 60 * 1000);
-        
-        function toggleDropdown(dropdownId) {
-            const content = document.getElementById(dropdownId);
-            const button = content.previousElementSibling;
-            const arrow = button.querySelector('.arrow');
-            
-            content.classList.toggle('show');
-            arrow.classList.toggle('rotate');
+    }
+
+    function render(data) {
+        document.getElementById('lastUpdate').textContent = data.updatedAtFormatted;
+        document.getElementById('live-update-time').textContent = 'Auto-updated ' + data.updatedAtFormatted;
+        renderStats(data.stats);
+        renderCurrentlyWorking(data.recentSessions);
+        renderWorkSessions(data.recentSessions);
+        renderActiveSessions(data.activeSessions);
+        renderCronTable(data.cronJobs);
+        renderAgentTasks(data.agentTasks);
+    }
+
+    let elapsedTimer;
+    function startElapsedTimer() {
+        if (elapsedTimer) clearInterval(elapsedTimer);
+        elapsedTimer = setInterval(() => {
+            document.querySelectorAll('.cw-elapsed[data-started]').forEach(el => {
+                const started = parseInt(el.getAttribute('data-started'), 10);
+                if (started) el.textContent = fmtElapsed(Date.now() - started);
+            });
+        }, 1000);
+    }
+
+    async function fetchData() {
+        try {
+            const resp = await fetch('dashboard-data.json?t=' + Date.now());
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const data = await resp.json();
+            render(data);
+            startElapsedTimer();
+        } catch (e) {
+            console.error('Failed to fetch dashboard data:', e);
         }
+    }
+
+    function toggleDropdown(dropdownId) {
+        const content = document.getElementById(dropdownId);
+        const button = content.previousElementSibling;
+        const arrow = button ? button.querySelector('.arrow') : null;
+        content.classList.toggle('show');
+        if (arrow) arrow.classList.toggle('rotate');
+    }
+
+    // Initial load
+    fetchData();
+    // Auto-refresh every 60 seconds
+    setInterval(fetchData, 60 * 1000);
     </script>
 </body>
-</html><!-- Force refresh Tue Feb 10 10:06:19 CST 2026 -->
+</html>

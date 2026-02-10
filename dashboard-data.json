@@ -1,0 +1,529 @@
+{
+  "updatedAt": "2026-02-10T17:09:13.873Z",
+  "updatedAtFormatted": "11:09 AM CST",
+  "stats": {
+    "cronJobs": 9,
+    "agentsWorking": 3,
+    "totalSessions": 23,
+    "agentCount": 4
+  },
+  "cronJobs": [
+    {
+      "id": "073e670c",
+      "name": "Email monitoring - @Tim requests",
+      "schedule": "*/15 4-21 * * * (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "fd6f38cf",
+      "name": "Granola Sync",
+      "schedule": "Every 2h",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "aab5052c",
+      "name": "Sawbill Lake Permit Monitor",
+      "schedule": "Every 6h",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "dad0136a",
+      "name": "Twitter AI Use Case Scout",
+      "schedule": "0 20 * * * (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "7dd836e2",
+      "name": "Team Standup (Pre-Brief)",
+      "schedule": "45 3 * * * (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "e4de2f23",
+      "name": "Morning Brief (Multi-Agent Coordination)",
+      "schedule": "0 4 * * * (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "8252dfc3",
+      "name": "UCL LinkedIn Pulse Report",
+      "schedule": "0 5 * * 1 (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "95a429ea",
+      "name": "AI Platform Updates Weekly",
+      "schedule": "0 6 * * 1 (America/Chicago)",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    },
+    {
+      "id": "aa2b135b",
+      "name": "Update Carter's commute to Filament",
+      "schedule": "{\"kind\":\"at\",\"at\":\"2026-03-03T16:00:00.000Z\"}",
+      "agent": "?",
+      "status": "unknown",
+      "next": "-",
+      "last": "-"
+    }
+  ],
+  "recentSessions": [
+    {
+      "agent": "mason",
+      "task": "Build Option 1 - Static HTML + JSON data file architecture for the dashboard.",
+      "model": "?",
+      "isActive": true,
+      "updatedAt": 1770743035063,
+      "ageMin": 5
+    },
+    {
+      "agent": "mason",
+      "task": "Design a better dashboard architecture that doesn't require constant GitHub pushes.",
+      "model": "claude-opus-4-6",
+      "isActive": true,
+      "updatedAt": 1770742953239,
+      "ageMin": 7
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": true,
+      "updatedAt": 1770742800054,
+      "ageMin": 9
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770741900122,
+      "ageMin": 24
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770741001629,
+      "ageMin": 39
+    },
+    {
+      "agent": "mason",
+      "task": "Debug why Vercel isn't deploying the updated dashboard.",
+      "model": "claude-opus-4-6",
+      "isActive": false,
+      "updatedAt": 1770740494642,
+      "ageMin": 48
+    },
+    {
+      "agent": "mason",
+      "task": "Migrate dashboard from GitHub Pages to Vercel for instant deployments.",
+      "model": "claude-opus-4-6",
+      "isActive": false,
+      "updatedAt": 1770740116540,
+      "ageMin": 54
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770740100418,
+      "ageMin": 54
+    },
+    {
+      "agent": "mason",
+      "task": "Dashboard UI/UX overhaul - improve visual organization without removing functionality.",
+      "model": "claude-opus-4-6",
+      "isActive": false,
+      "updatedAt": 1770740050783,
+      "ageMin": 55
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770739200656,
+      "ageMin": 69
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Granola Sync",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770738646366,
+      "ageMin": 78
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770738300049,
+      "ageMin": 84
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770737400025,
+      "ageMin": 99
+    },
+    {
+      "agent": "chase",
+      "task": "Cron: Email monitoring - @Tim requests",
+      "model": "claude-sonnet-4-5",
+      "isActive": false,
+      "updatedAt": 1770736500028,
+      "ageMin": 114
+    }
+  ],
+  "agentTasks": {
+    "main": [
+      {
+        "agent": "main",
+        "task": "Cron: Morning Brief (Multi-Agent Coordination)",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770717600024,
+        "ageMin": 429
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Sawbill Lake Permit Monitor",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770692400082,
+        "ageMin": 849
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Twitter AI Use Case Scout",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770688800066,
+        "ageMin": 909
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770664500025,
+        "ageMin": 1314
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770663600028,
+        "ageMin": 1329
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770662700028,
+        "ageMin": 1344
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770661800027,
+        "ageMin": 1359
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770660900025,
+        "ageMin": 1374
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770660000026,
+        "ageMin": 1389
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770659100027,
+        "ageMin": 1404
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770658200027,
+        "ageMin": 1419
+      },
+      {
+        "agent": "main",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770657300025,
+        "ageMin": 1434
+      }
+    ],
+    "atlas": [],
+    "mason": [
+      {
+        "agent": "mason",
+        "task": "Build Option 1 - Static HTML + JSON data file architecture for the dashboard.",
+        "model": "?",
+        "isActive": true,
+        "updatedAt": 1770743035063,
+        "ageMin": 5
+      },
+      {
+        "agent": "mason",
+        "task": "Design a better dashboard architecture that doesn't require constant GitHub pushes.",
+        "model": "claude-opus-4-6",
+        "isActive": true,
+        "updatedAt": 1770742953239,
+        "ageMin": 7
+      },
+      {
+        "agent": "mason",
+        "task": "Debug why Vercel isn't deploying the updated dashboard.",
+        "model": "claude-opus-4-6",
+        "isActive": false,
+        "updatedAt": 1770740494642,
+        "ageMin": 48
+      },
+      {
+        "agent": "mason",
+        "task": "Migrate dashboard from GitHub Pages to Vercel for instant deployments.",
+        "model": "claude-opus-4-6",
+        "isActive": false,
+        "updatedAt": 1770740116540,
+        "ageMin": 54
+      },
+      {
+        "agent": "mason",
+        "task": "Dashboard UI/UX overhaul - improve visual organization without removing functionality.",
+        "model": "claude-opus-4-6",
+        "isActive": false,
+        "updatedAt": 1770740050783,
+        "ageMin": 55
+      }
+    ],
+    "reid": [],
+    "chase": [
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": true,
+        "updatedAt": 1770742800054,
+        "ageMin": 9
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770741900122,
+        "ageMin": 24
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770741001629,
+        "ageMin": 39
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770740100418,
+        "ageMin": 54
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770739200656,
+        "ageMin": 69
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Granola Sync",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770738646366,
+        "ageMin": 78
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770738300049,
+        "ageMin": 84
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770737400025,
+        "ageMin": 99
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770736500028,
+        "ageMin": 114
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770735600023,
+        "ageMin": 129
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770734700036,
+        "ageMin": 144
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770733800027,
+        "ageMin": 159
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770732900022,
+        "ageMin": 174
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770732000026,
+        "ageMin": 189
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Granola Sync",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770731446409,
+        "ageMin": 198
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770731100026,
+        "ageMin": 204
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770730200026,
+        "ageMin": 219
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770729300025,
+        "ageMin": 234
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770728400030,
+        "ageMin": 249
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770727500027,
+        "ageMin": 264
+      },
+      {
+        "agent": "chase",
+        "task": "Cron: Email monitoring - @Tim requests",
+        "model": "claude-sonnet-4-5",
+        "isActive": false,
+        "updatedAt": 1770726600070,
+        "ageMin": 279
+      }
+    ]
+  },
+  "activeSessions": [
+    {
+      "key": "agent:main:main",
+      "model": "claude-sonnet-4-5",
+      "tokens": 200000,
+      "age": "?"
+    }
+  ]
+}
