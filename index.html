@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en" data-last-updated="2026-02-10T05:12:22-06:00">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's Agent Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f0f1e;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+        
+        .refresh-btn {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .refresh-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.6);
+        }
+        
+        /* Org Chart Structure */
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .org-tier {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Leader Card (Carter) */
+        .leader-card {
+            background: linear-gradient(135deg, #dc2127 0%, #a31615 100%);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 12px 48px rgba(220, 33, 39, 0.4);
+            border: 2px solid rgba(220, 33, 39, 0.5);
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .leader-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .leader-card h2 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .leader-title {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+        
+        /* Connecting Lines */
+        .connector {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(102, 126, 234, 0.5), rgba(102, 126, 234, 0.2));
+            margin: 0 auto;
+        }
+        
+        .connector-horizontal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            height: 40px;
+        }
+        
+        .connector-horizontal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 1000px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(102, 126, 234, 0.5), transparent);
+        }
+        
+        .connector-vertical {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Agent Cards */
+        .agent-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            max-width: 360px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .agent-card.coordinator {
+            border: 2px solid rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #1e1e38 0%, #1a2344 100%);
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .agent-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin-right: 16px;
+            object-fit: cover;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .agent-info h3 {
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .agent-id {
+            font-size: 12px;
+            color: #667eea;
+            font-family: 'Monaco', monospace;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-idle {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .agent-role {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .agent-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .stat {
+            font-size: 12px;
+            color: #808080;
+        }
+        
+        .stat strong {
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+        
+        .dropdown-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .toggle-dropdown {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .toggle-dropdown:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+        
+        .dropdown-content {
+            display: none;
+            margin-top: 12px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .dropdown-content.show {
+            display: block;
+        }
+        
+        .dropdown-content h4 {
+            color: #667eea;
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .dropdown-content h4:first-child {
+            margin-top: 0;
+        }
+        
+        .dropdown-content p,
+        .dropdown-content ul {
+            color: #c0c0c0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .dropdown-content ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+        
+        .dropdown-content blockquote {
+            border-left: 3px solid #667eea;
+            padding-left: 12px;
+            margin: 8px 0;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+        
+        .task-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-name {
+            color: #e0e0e0;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .task-meta {
+            font-size: 12px;
+            color: #808080;
+        }
+        
+        .task-cost {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .arrow {
+            transition: transform 0.2s;
+        }
+        
+        .arrow.rotate {
+            transform: rotate(180deg);
+        }
+        
+        .file-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            border-radius: 6px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .file-link:hover {
+            background: rgba(102, 126, 234, 0.25);
+            border-color: rgba(102, 126, 234, 0.6);
+        }
+        
+        .file-link::before {
+            content: '📄 ';
+        }
+        
+        .team-tier {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            width: 100%;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .team-tier {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🫡 Tim's Agent Dashboard</h1>
+                <p class="subtitle">Your AI work squad · Live view · Last data fetch: <span id="lastUpdate"></span></p>
+            </div>
+            <button class="refresh-btn" onclick="location.reload()">🔄 Refresh Now</button>
+        </header>
+        
+        <div class="org-chart">
+            <!-- Carter (Leader) -->
+            <div class="org-tier">
+                <div class="leader-card">
+                    <img src="https://ui-avatars.com/api/?name=CJ&background=dc2127&color=fff&size=256&bold=true&font-size=0.4" alt="Carter" class="leader-avatar">
+                    <h2>Carter Jensen</h2>
+                    <p class="leader-title">VP of Product & Innovation</p>
+                </div>
+            </div>
+            
+            <!-- Connector -->
+            <div class="connector"></div>
+            
+            <!-- Tim (Chief of Staff) -->
+            <div class="org-tier">
+                <div class="agent-card coordinator">
+                    <div class="agent-header">
+                        <img src="https://ui-avatars.com/api/?name=Tim&background=667eea&color=fff&size=128&bold=true" alt="Tim" class="agent-avatar">
+                        <div class="agent-info">
+                            <h3>Tim (Chief of Staff)</h3>
+                            <div class="agent-id">main</div>
+                        </div>
+                    </div>
+                    <span class="status-badge status-active">● ACTIVE</span>
+                    <p class="agent-role">Coordinator & lead agent. Manages team, synthesizes reports, single point of contact for Carter.</p>
+                    <div class="agent-stats">
+                        <div class="stat">
+                            Model
+                            <strong>Sonnet 4.5</strong>
+                        </div>
+                        <div class="stat">
+                            Status
+                            <strong>Live</strong>
+                        </div>
+                    </div>
+                    <div class="dropdown-section">
+                        <button class="toggle-dropdown" onclick="toggleDropdown('tim-tasks')">
+                            Task Audit (Last 24h)
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content" id="tim-tasks">
+                            <div class="task-item">
+                                <div class="task-name">GitHub Pages Setup + Live Dashboard Updates</div>
+                                <div class="task-meta">133K tokens · <span class="task-cost">~$0.13</span> · 5:12 AM</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">Dashboard Org Chart + Auto-Update Setup</div>
+                                <div class="task-meta">114K tokens · <span class="task-cost">~$0.11</span> · 5:02 AM</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">Config Update (Enable Full Team)</div>
+                                <div class="task-meta">82K tokens · <span class="task-cost">~$0.08</span> · 5:00 AM</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">Reid Task Coordination</div>
+                                <div class="task-meta">Spawned curriculum framework task · 5:00 AM</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">System Update (2026.2.9)</div>
+                                <div class="task-meta">28K tokens · <span class="task-cost">~$0.03</span> · 4:42 AM</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">Morning Brief Coordination</div>
+                                <div class="task-meta">50K tokens · <span class="task-cost">~$0.05</span> · 4:00 AM</div>
+                            </div>
+                        </div>
+                        
+                        <button class="toggle-dropdown" onclick="toggleDropdown('tim-scheduled')">
+                            Scheduled Tasks
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content" id="tim-scheduled">
+                            <div class="task-item">
+                                <div class="task-name">📋 Email Monitoring</div>
+                                <div class="task-meta">Every 15 min (4am-9pm CST) · Chase agent</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">🌅 Morning Brief</div>
+                                <div class="task-meta">Daily at 4:00 AM CST · Multi-agent coordination</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">⏰ Heartbeat Checks</div>
+                                <div class="task-meta">Every 30 minutes · Proactive monitoring</div>
+                            </div>
+                        </div>
+                        
+                        <button class="toggle-dropdown" onclick="toggleDropdown('tim-programming')">
+                            View Programming
+                            <span class="arrow">▼</span>
+                        </button>
+                        <a href="file:///Users/carterjensen/.openclaw/workspace/SOUL.md" class="file-link">SOUL.md</a>
+                        <a href="file:///Users/carterjensen/.openclaw/workspace/IDENTITY.md" class="file-link">IDENTITY.md</a>
+                        <a href="file:///Users/carterjensen/.openclaw/workspace/AGENTS.md" class="file-link">AGENTS.md</a>
+                        <div class="dropdown-content" id="tim-programming">
+                            <h4>Personality</h4>
+                            <p>Direct, anticipatory, operational backbone. Real, not corporate.</p>
+                            
+                            <h4>Primary Responsibilities</h4>
+                            <ul>
+                                <li>Coordinate Atlas, Reid, Mason, and Chase</li>
+                                <li>Single point of contact for Carter</li>
+                                <li>Delegate specialized tasks to team members</li>
+                                <li>Synthesize reports and deliver insights</li>
+                                <li>Monitor email, calendar, and deadlines</li>
+                                <li>Proactive support during heartbeats</li>
+                            </ul>
+                            
+                            <h4>Hard Boundaries</h4>
+                            <ul>
+                                <li><strong>NEVER</strong> send emails/messages without Carter's approval</li>
+                                <li>Private things stay private</li>
+                                <li>Not Carter's voice in group chats</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Connector -->
+            <div class="connector-horizontal"></div>
+            
+            <!-- The Team -->
+            <div class="org-tier">
+                <div class="team-tier">
+                    <!-- Atlas Card -->
+                    <div class="agent-card">
+                        <div class="connector-vertical"></div>
+                        <div class="agent-header">
+                            <img src="https://ui-avatars.com/api/?name=Atlas&background=46d6db&color=000&size=128&bold=true" alt="Atlas" class="agent-avatar">
+                            <div class="agent-info">
+                                <h3>Atlas (Researcher)</h3>
+                                <div class="agent-id">atlas</div>
+                            </div>
+                        </div>
+                        <span class="status-badge status-idle">● IDLE</span>
+                        <p class="agent-role">AI Research & Intelligence — tracks trends, competitive intel, market analysis, content opportunities.</p>
+                        <div class="agent-stats">
+                            <div class="stat">
+                                Model
+                                <strong>Sonnet 4.5</strong>
+                            </div>
+                            <div class="stat">
+                                Spawns
+                                <strong>1</strong>
+                            </div>
+                        </div>
+                        <div class="dropdown-section">
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-tasks')">
+                                Task Audit (Last 24h)
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="atlas-tasks">
+                                <div class="task-item">
+                                    <div class="task-name">Twitter AI Scout (8pm CST)</div>
+                                    <div class="task-meta">71K tokens · <span class="task-cost">~$0.03</span> · 8:00 PM</div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-name">Morning Brief Research</div>
+                                    <div class="task-meta">31K tokens · <span class="task-cost">~$0.03</span> · 4:00 AM</div>
+                                </div>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-scheduled')">
+                                Scheduled Tasks
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="atlas-scheduled">
+                                <div class="task-item">
+                                    <div class="task-name">🐦 Twitter AI Use Case Scout</div>
+                                    <div class="task-meta">Daily at 8:00 PM CST · Find real AI workflows + engage</div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-name">🔄 AI Platform Updates Weekly</div>
+                                    <div class="task-meta">Mondays at 6:00 AM CST · Track all major AI platform changes</div>
+                                </div>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('atlas-programming')">
+                                View Programming
+                                <span class="arrow">▼</span>
+                            </button>
+                            <a href="file:///Users/carterjensen/.openclaw/workspace/agents/atlas/SOUL.md" class="file-link">View SOUL.md</a>
+                            <div class="dropdown-content" id="atlas-programming">
+                                <h4>Personality</h4>
+                                <p>Curious scout, always connecting dots. Bias toward actionable insights over interesting trivia.</p>
+                                
+                                <h4>What I Do</h4>
+                                <ul>
+                                    <li>Track emerging AI tools, techniques, and trends</li>
+                                    <li>Monitor competitors and market movements</li>
+                                    <li>Research specific topics on demand</li>
+                                    <li>Scout content opportunities</li>
+                                    <li>Surface early signals before they're obvious</li>
+                                    <li>Synthesize complex info into actionable insights</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reid Card -->
+                    <div class="agent-card">
+                        <div class="connector-vertical"></div>
+                        <div class="agent-header">
+                            <img src="https://ui-avatars.com/api/?name=Reid&background=10b981&color=fff&size=128&bold=true" alt="Reid" class="agent-avatar">
+                            <div class="agent-info">
+                                <h3>Reid (Curriculum Expert)</h3>
+                                <div class="agent-id">reid</div>
+                            </div>
+                        </div>
+                        <span class="status-badge status-idle">● IDLE</span>
+                        <p class="agent-role">Instructional design — course structures, teaching frameworks, student journey optimization.</p>
+                        <div class="agent-stats">
+                            <div class="stat">
+                                Model
+                                <strong>Opus 4.6</strong>
+                            </div>
+                            <div class="stat">
+                                Last Task
+                                <strong>Completed</strong>
+                            </div>
+                        </div>
+                        <div class="dropdown-section">
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-tasks')">
+                                Task Audit (Last 24h)
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="reid-tasks">
+                                <div class="task-item">
+                                    <div class="task-name">"Can AI Build My Business App?" Curriculum Design</div>
+                                    <div class="task-meta">10.3K tokens · <span class="task-cost">~$0.17</span> · completed 5:02 AM</div>
+                                </div>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-scheduled')">
+                                Scheduled Tasks
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="reid-scheduled">
+                                <p style="color: #808080; font-style: italic;">No scheduled recurring tasks — spawned on-demand for curriculum projects</p>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('reid-programming')">
+                                View Programming
+                                <span class="arrow">▼</span>
+                            </button>
+                            <a href="file:///Users/carterjensen/.openclaw/workspace/agents/reid/SOUL.md" class="file-link">View SOUL.md</a>
+                            <div class="dropdown-content" id="reid-programming">
+                                <h4>Personality</h4>
+                                <p>Obsessed with "time-to-first-win." Hates fluff. Always asking "does this actually teach?"</p>
+                                
+                                <h4>Mantra</h4>
+                                <blockquote>"If they can't implement it by tomorrow, we didn't teach it right."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mason Card -->
+                    <div class="agent-card">
+                        <div class="connector-vertical"></div>
+                        <div class="agent-header">
+                            <img src="https://ui-avatars.com/api/?name=Mason&background=f59e0b&color=000&size=128&bold=true" alt="Mason" class="agent-avatar">
+                            <div class="agent-info">
+                                <h3>Mason (Development Partner)</h3>
+                                <div class="agent-id">mason</div>
+                            </div>
+                        </div>
+                        <span class="status-badge status-idle">● IDLE</span>
+                        <p class="agent-role">Technical architect — builds automation, evaluates tools, designs system infrastructure.</p>
+                        <div class="agent-stats">
+                            <div class="stat">
+                                Model
+                                <strong>Opus 4.6</strong>
+                            </div>
+                            <div class="stat">
+                                Spawns
+                                <strong>0</strong>
+                            </div>
+                        </div>
+                        <div class="dropdown-section">
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-tasks')">
+                                Task Audit (Last 24h)
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="mason-tasks">
+                                <p style="color: #808080; font-style: italic;">No tasks in last 24 hours</p>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-scheduled')">
+                                Scheduled Tasks
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="mason-scheduled">
+                                <p style="color: #808080; font-style: italic;">No scheduled recurring tasks — spawned on-demand for technical projects</p>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('mason-programming')">
+                                View Programming
+                                <span class="arrow">▼</span>
+                            </button>
+                            <a href="file:///Users/carterjensen/.openclaw/workspace/agents/mason/SOUL.md" class="file-link">View SOUL.md</a>
+                            <div class="dropdown-content" id="mason-programming">
+                                <h4>Personality</h4>
+                                <p>Builder mindset. Pragmatic over perfect. "Ship it and iterate."</p>
+                                
+                                <h4>Mantra</h4>
+                                <blockquote>"Build the simplest thing that could possibly work, then make it better."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chase Card -->
+                    <div class="agent-card">
+                        <div class="connector-vertical"></div>
+                        <div class="agent-header">
+                            <img src="https://ui-avatars.com/api/?name=Chase&background=a78bfa&color=fff&size=128&bold=true" alt="Chase" class="agent-avatar">
+                            <div class="agent-info">
+                                <h3>Chase (Personal Assistant)</h3>
+                                <div class="agent-id">chase</div>
+                            </div>
+                        </div>
+                        <span class="status-badge status-idle">● IDLE</span>
+                        <p class="agent-role">Executive assistant — email management, calendar coordination, meeting prep, follow-ups.</p>
+                        <div class="agent-stats">
+                            <div class="stat">
+                                Model
+                                <strong>Sonnet 4.5</strong>
+                            </div>
+                            <div class="stat">
+                                Spawns
+                                <strong>0</strong>
+                            </div>
+                        </div>
+                        <div class="dropdown-section">
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-tasks')">
+                                Task Audit (Last 24h)
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="chase-tasks">
+                                <div class="task-item">
+                                    <div class="task-name">Calendar Event Creation</div>
+                                    <div class="task-meta">24K tokens · <span class="task-cost">~$0.009</span> · yesterday 7:55 PM</div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-name">Granola Sync (3 runs)</div>
+                                    <div class="task-meta">Minimal tokens · Auto-sync meeting transcripts</div>
+                                </div>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-scheduled')">
+                                Scheduled Tasks
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="dropdown-content" id="chase-scheduled">
+                                <div class="task-item">
+                                    <div class="task-name">📧 Email Monitoring</div>
+                                    <div class="task-meta">Every 15 min (4am-9pm CST) · Flag @Tim requests + action items</div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-name">📝 Granola Meeting Sync</div>
+                                    <div class="task-meta">Every 2 hours · Sync transcripts + extract action items</div>
+                                </div>
+                            </div>
+                            
+                            <button class="toggle-dropdown" onclick="toggleDropdown('chase-programming')">
+                                View Programming
+                                <span class="arrow">▼</span>
+                            </button>
+                            <a href="file:///Users/carterjensen/.openclaw/workspace/agents/chase/SOUL.md" class="file-link">View SOUL.md</a>
+                            <div class="dropdown-content" id="chase-programming">
+                                <h4>Personality</h4>
+                                <p>Efficient, detail-oriented. Anticipates needs before being asked. Nothing falls through the cracks.</p>
+                                
+                                <h4>Mantra</h4>
+                                <blockquote>"Chase down every detail so Carter doesn't have to."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateTime() {
+            const lastUpdated = document.documentElement.getAttribute('data-last-updated');
+            if (lastUpdated) {
+                const date = new Date(lastUpdated);
+                document.getElementById('lastUpdate').textContent = date.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    timeZone: 'America/Chicago'
+                }) + ' CST';
+            }
+        }
+        
+        updateTime();
+        
+        // Auto-refresh page every 5 minutes to get latest data
+        setTimeout(() => {
+            location.reload();
+        }, 5 * 60 * 1000);
+        
+        function toggleDropdown(dropdownId) {
+            const content = document.getElementById(dropdownId);
+            const button = content.previousElementSibling;
+            const arrow = button.querySelector('.arrow');
+            
+            content.classList.toggle('show');
+            arrow.classList.toggle('rotate');
+        }
+    </script>
+</body>
+</html>
