@@ -1,0 +1,5 @@
+# Only track dashboard files
+*
+!agent-dashboard.html
+!.gitignore
+!README.md
