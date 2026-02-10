@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-last-updated="2026-02-10T05:12:22-06:00">
+<html lang="en" data-last-updated="2026-02-10T10:16:28-06:00">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -356,12 +356,12 @@
         }
         
         .toggle-dropdown {
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.25);
             color: #667eea;
-            padding: 12px 16px;
+            padding: 10px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
@@ -370,12 +370,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            min-height: 44px;
+            margin-bottom: 6px;
+            min-height: 40px;
         }
         
         .toggle-dropdown:hover {
             background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+        
+        .toggle-dropdown .arrow {
+            font-size: 10px;
+            opacity: 0.7;
         }
         
         @media (min-width: 768px) {
@@ -392,12 +398,34 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             border: 1px solid rgba(102, 126, 234, 0.1);
-            max-height: 400px;
+            max-height: 240px;
             overflow-y: auto;
         }
         
         .dropdown-content.show {
             display: block;
+        }
+        
+        /* Scrollable list containers */
+        .scrollable-list {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(102, 126, 234, 0.5) rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Fade hint at bottom of scrollable areas */
+        .scroll-container {
+            position: relative;
+        }
+        .scroll-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(transparent, rgba(15, 15, 30, 0.8));
+            pointer-events: none;
+            border-radius: 0 0 8px 8px;
         }
         
         .dropdown-content h4 {
@@ -519,6 +547,256 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(102, 126, 234, 0.7);
         }
+        
+        /* Team Collaboration Timeline Styles */
+        .team-collab-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+        }
+        
+        .collab-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .collab-card {
+                border-radius: 16px;
+                padding: 24px;
+            }
+        }
+        
+        .collab-heading {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .collab-heading {
+                font-size: 20px;
+            }
+        }
+        
+        /* Daily Rituals */
+        .ritual-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .ritual-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid rgba(102, 126, 234, 0.5);
+        }
+        
+        .ritual-time {
+            flex-shrink: 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            min-width: 65px;
+            text-align: center;
+        }
+        
+        .ritual-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .ritual-details {
+            flex: 1;
+        }
+        
+        .ritual-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .ritual-details p {
+            color: #a0a0a0;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        /* Collaboration Timeline */
+        .collab-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .collab-event {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid rgba(16, 185, 129, 0.5);
+        }
+        
+        .event-time {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        
+        .event-flow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .agent-badge, .team-badge {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .agent-badge.tim {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.4);
+        }
+        
+        .agent-badge.atlas {
+            background: rgba(70, 214, 219, 0.2);
+            color: #46d6db;
+            border: 1px solid rgba(70, 214, 219, 0.4);
+        }
+        
+        .agent-badge.reid {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+        
+        .agent-badge.mason {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        
+        .agent-badge.chase {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, 0.4);
+        }
+        
+        .team-badge {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+        
+        .flow-arrow {
+            color: #808080;
+            font-size: 16px;
+        }
+        
+        .event-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .event-details p {
+            color: #c0c0c0;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .event-meta {
+            display: inline-block;
+            font-size: 11px;
+            color: #808080;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        /* Ongoing Work */
+        .ongoing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .ongoing-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .ongoing-details {
+            flex: 1;
+        }
+        
+        .ongoing-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .ongoing-details p {
+            color: #a0a0a0;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -548,13 +826,13 @@
             <div class="org-tier">
                 <div class="agent-card coordinator">
                     <div class="agent-header">
-                        <img src="https://ui-avatars.com/api/?name=Tim&background=667eea&color=fff&size=128&bold=true" alt="Tim" class="agent-avatar">
+                        <img src="avatars/tim-kermit.png" alt="Tim" class="agent-avatar">
                         <div class="agent-info">
                             <h3>Tim (Chief of Staff)</h3>
                             <div class="agent-id">main</div>
                         </div>
                     </div>
-                    <span class="status-badge status-active">● ACTIVE</span>
+                    <span class="status-badge status-idle">● IDLE</span>
                     <p class="agent-role">Coordinator & lead agent. Manages team, synthesizes reports, single point of contact for Carter.</p>
                     <div class="agent-stats">
                         <div class="stat">
@@ -568,35 +846,73 @@
                     </div>
                     <div class="dropdown-section">
                         <button class="toggle-dropdown" onclick="toggleDropdown('tim-tasks')">
-                            Task Audit (Last 24h)
+                            Task Audit (Last 24h) · 15
                             <span class="arrow">▼</span>
                         </button>
                         <div class="dropdown-content" id="tim-tasks">
-                            <div class="task-item">
-                                <div class="task-name">GitHub Pages Setup + Live Dashboard Updates</div>
-                                <div class="task-meta">133K tokens · <span class="task-cost">~$0.13</span> · 5:12 AM</div>
+                                <!-- tim-tasks-START -->
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Morning Brief (Multi-Agent Coordination)</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 6h 14m ago · 4:00 AM</div>
                             </div>
-                            <div class="task-item">
-                                <div class="task-name">Dashboard Org Chart + Auto-Update Setup</div>
-                                <div class="task-meta">114K tokens · <span class="task-cost">~$0.11</span> · 5:02 AM</div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Sawbill Lake Permit Monitor</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 13h 14m ago · 9:00 PM</div>
                             </div>
-                            <div class="task-item">
-                                <div class="task-name">Config Update (Enable Full Team)</div>
-                                <div class="task-meta">82K tokens · <span class="task-cost">~$0.08</span> · 5:00 AM</div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Twitter AI Use Case Scout</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 14h 14m ago · 8:00 PM</div>
                             </div>
-                            <div class="task-item">
-                                <div class="task-name">Reid Task Coordination</div>
-                                <div class="task-meta">Spawned curriculum framework task · 5:00 AM</div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 20h 59m ago · 1:15 PM</div>
                             </div>
-                            <div class="task-item">
-                                <div class="task-name">System Update (2026.2.9)</div>
-                                <div class="task-meta">28K tokens · <span class="task-cost">~$0.03</span> · 4:42 AM</div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 21h 14m ago · 1:00 PM</div>
                             </div>
-                            <div class="task-item">
-                                <div class="task-name">Morning Brief Coordination</div>
-                                <div class="task-meta">50K tokens · <span class="task-cost">~$0.05</span> · 4:00 AM</div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 21h 29m ago · 12:45 PM</div>
                             </div>
-                        </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 21h 44m ago · 12:30 PM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 21h 59m ago · 12:15 PM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 22h 14m ago · 12:00 PM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 22h 29m ago · 11:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 22h 44m ago · 11:30 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 22h 59m ago · 11:15 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 23h 14m ago · 11:00 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 23h 29m ago · 10:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 23h 44m ago · 10:30 AM</div>
+                            </div>
+                            <!-- tim-tasks-END -->
+                            </div>
                         
                         <button class="toggle-dropdown" onclick="toggleDropdown('tim-scheduled')">
                             Scheduled Tasks
@@ -604,12 +920,16 @@
                         </button>
                         <div class="dropdown-content" id="tim-scheduled">
                             <div class="task-item">
-                                <div class="task-name">📋 Email Monitoring</div>
-                                <div class="task-meta">Every 15 min (4am-9pm CST) · Chase agent</div>
+                                <div class="task-name">👥 Team Standup (Pre-Brief)</div>
+                                <div class="task-meta">Daily at 3:45 AM CST · Collect overnight work from all agents</div>
                             </div>
                             <div class="task-item">
                                 <div class="task-name">🌅 Morning Brief</div>
-                                <div class="task-meta">Daily at 4:00 AM CST · Multi-agent coordination</div>
+                                <div class="task-meta">Daily at 4:00 AM CST · Multi-agent coordination (includes standup)</div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-name">📋 Email Monitoring</div>
+                                <div class="task-meta">Every 15 min (4am-9pm CST) · Chase agent</div>
                             </div>
                             <div class="task-item">
                                 <div class="task-name">⏰ Heartbeat Checks</div>
@@ -652,14 +972,650 @@
             <!-- Connector -->
             <div class="connector-horizontal"></div>
             
-            <!-- The Team -->
+            <!-- LIVE-DATA-START -->
+<div id="live-data-panel" class="org-tier">
+  <div class="team-collab-section">
+    <h2 class="section-title">⚡ Live System Status <span style="font-size:12px;color:#808080;font-weight:normal;">Auto-updated 10:13 AM CST</span></h2>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;">
+      <div style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:28px;font-weight:bold;color:#667eea;">9</div>
+        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Scheduled Jobs</div>
+      </div>
+      <div style="background:rgba(72,187,120,0.1);border:1px solid rgba(72,187,120,0.3);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:28px;font-weight:bold;color:#48bb78;">2</div>
+        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Agents Working</div>
+      </div>
+      <div style="background:rgba(237,137,54,0.1);border:1px solid rgba(237,137,54,0.3);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:28px;font-weight:bold;color:#ed8936;">23</div>
+        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Total Sessions</div>
+      </div>
+      <div style="background:rgba(159,122,234,0.1);border:1px solid rgba(159,122,234,0.3);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:28px;font-weight:bold;color:#9f7aea;">4</div>
+        <div style="font-size:11px;color:#a0a0a0;margin-top:4px;">Agents</div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+      @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+      @keyframes glow-pulse{0%,100%{box-shadow:0 0 8px rgba(72,187,120,0.3)}50%{box-shadow:0 0 20px rgba(72,187,120,0.6)}}
+      @keyframes slide-glow{0%{background-position:200% 0}100%{background-position:-200% 0}}
+      .currently-working-card{background:linear-gradient(135deg,rgba(72,187,120,0.08),rgba(102,126,234,0.05));border:1px solid rgba(72,187,120,0.25);border-radius:14px;padding:16px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
+      .currently-working-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#48bb78,#667eea,transparent);background-size:200% 100%;animation:slide-glow 3s linear infinite;}
+      .cw-item{display:flex;align-items:center;gap:14px;padding:12px 14px;margin:8px 0;background:rgba(0,0,0,0.2);border:1px solid rgba(72,187,120,0.15);border-radius:10px;animation:glow-pulse 3s ease-in-out infinite;}
+      .cw-spinner{width:20px;height:20px;border:2.5px solid rgba(72,187,120,0.2);border-top-color:#48bb78;border-radius:50%;animation:spin 1s linear infinite;flex-shrink:0;}
+      .cw-elapsed{font-variant-numeric:tabular-nums;color:#48bb78;font-size:12px;font-weight:600;font-family:monospace;min-width:48px;text-align:right;}
+    </style>
+
+    <div class="currently-working-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span style="font-size:18px;">⚙️</span>
+        <span style="color:#e0e0e0;font-size:16px;font-weight:700;">Currently Working</span>
+        <span style="background:#48bb78;color:#000;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">2 ACTIVE</span>
+      </div>
+      <div class="cw-item">
+        <div class="cw-spinner" style="border-top-color:#ed8936;"></div>
+        <img src="avatars/mason-oscar.png" alt="mason" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+            <span style="background:rgba(72,187,120,0.15);color:#48bb78;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;">⚡ In Progress</span>
+          </div>
+          <div style="color:#d0d0d0;font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
+        </div>
+        <div class="cw-elapsed" data-started="1770739762373">4m ago</div>
+      </div>
+<div class="cw-item">
+        <div class="cw-spinner" style="border-top-color:#667eea;"></div>
+        <img src="avatars/atlas-cookie.png" alt="atlas" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
+            <span style="background:rgba(72,187,120,0.15);color:#48bb78;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;">⚡ In Progress</span>
+          </div>
+          <div style="color:#d0d0d0;font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
+        </div>
+        <div class="cw-elapsed" data-started="1770739665790">6m ago</div>
+      </div>
+    </div>
+
+    <div class="collab-card">
+      <h3 class="collab-heading">🤖 Agent Work Sessions <span style="font-size:11px;color:#808080;font-weight:normal;">(last 2 hours · 18 total)</span></h3>
+      <div class="scrollable-list" style="max-height:320px;overflow-y:auto;padding:4px 0;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;border-left:3px solid #ed8936;">
+      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#48bb78;margin-right:6px;animation:pulse 2s infinite;"></span>
+          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+          <span style="color:#48bb78;font-size:11px;font-weight:600;text-transform:uppercase;">Running</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">4m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">?</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;border-left:3px solid #667eea;">
+      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#48bb78;margin-right:6px;animation:pulse 2s infinite;"></span>
+          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
+          <span style="color:#48bb78;font-size:11px;font-weight:600;text-transform:uppercase;">Running</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">6m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">?</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">14m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">16m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix the LinkedIn scraper URL issue and validate with a small test BEFORE running the full scrape.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">23m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Granola Sync</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">29m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">31m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Run a full production test of the NEW LinkedIn scraper you just built.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">44m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/atlas-cookie.png" alt="atlas" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#667eea;font-weight:700;font-size:14px;">Atlas</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">46m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Update the UCL LinkedIn Pulse scraping logic to capture complete post data.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">47m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Add visual indicators for tasks currently in progress on the dashboard.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">51m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix the Task Audit section on the dashboard - it's not showing completed work.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">57m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fix dashboard org chart and add ongoing responsibilities section.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">59m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/mason-oscar.png" alt="mason" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#ed8936;font-weight:700;font-size:14px;">Mason</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">59m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Update the dashboard generator to use Sesame Street character avatars instead of emoji.</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-opus-4-6</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 14m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 29m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 44m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+      <img src="avatars/chase-elmo.png" alt="chase" class="agent-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#808080;margin-right:6px;"></span>
+          <span style="color:#9f7aea;font-weight:700;font-size:14px;">Chase</span>
+          <span style="color:#808080;font-size:11px;font-weight:600;text-transform:uppercase;">Completed</span>
+          <span style="color:#606060;font-size:11px;margin-left:auto;">1h 59m ago</span>
+        </div>
+        <div style="color:#c0c0c0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cron: Email monitoring - @Tim requests</div>
+        <div style="color:#606060;font-size:10px;margin-top:2px;">claude-sonnet-4-5</div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        function fmtElapsed(ms){
+          var s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);
+          if(h>0)return h+'h '+String(m%60).padStart(2,'0')+'m';
+          if(m>0)return m+'m '+String(s%60).padStart(2,'0')+'s';
+          return s+'s';
+        }
+        setInterval(function(){
+          document.querySelectorAll('.cw-elapsed[data-started]').forEach(function(el){
+            var started=parseInt(el.getAttribute('data-started'),10);
+            if(started)el.textContent=fmtElapsed(Date.now()-started);
+          });
+        },1000);
+      })();
+    </script>
+
+    <div class="collab-card">
+      <h3 class="collab-heading">🕐 Active Sessions (Last Hour)</h3>
+      <div class="scrollable-list" style="max-height:250px;overflow-y:auto;padding:4px 0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+      <span style="color:#e0e0e0; font-size:13px; font-family:monospace;">agent:main:main</span>
+      <span style="color:#a0a0a0; font-size:12px;">claude-sonnet-4-5 · 200000 · ?</span>
+    </div>
+      </div>
+    </div>
+    
+    <div class="collab-card">
+      <h3 class="collab-heading">📋 All Scheduled Jobs <span style="font-size:11px;color:#808080;font-weight:normal;">(live from openclaw cron list)</span></h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="border-bottom:2px solid rgba(102,126,234,0.3);">
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">ID</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Name</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Schedule</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Agent</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Status</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Next</th>
+              <th style="text-align:left;padding:8px;color:#667eea;font-size:11px;text-transform:uppercase;">Last</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">073e670c</code></td>
+    <td style="padding:8px;">Email monitoring - @Tim requests</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">fd6f38cf</code></td>
+    <td style="padding:8px;">Granola Sync</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">aab5052c</code></td>
+    <td style="padding:8px;">Sawbill Lake Permit Monitor</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">dad0136a</code></td>
+    <td style="padding:8px;">Twitter AI Use Case Scout</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">7dd836e2</code></td>
+    <td style="padding:8px;">Team Standup (Pre-Brief)</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">e4de2f23</code></td>
+    <td style="padding:8px;">Morning Brief (Multi-Agent Coordination)</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">8252dfc3</code></td>
+    <td style="padding:8px;">UCL LinkedIn Pulse Report</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">95a429ea</code></td>
+    <td style="padding:8px;">AI Platform Updates Weekly</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <td style="padding:8px;"><code style="color:#667eea;">aa2b135b</code></td>
+    <td style="padding:8px;">Update Carter's commute to Filament</td>
+    <td style="padding:8px; font-size:11px;"><code>[object Object]</code></td>
+    <td style="padding:8px;">?</td>
+    <td style="padding:8px;"><span style="color:#a0a0a0; font-weight:600;">● UNKNOWN</span></td>
+    <td style="padding:8px; font-size:12px;">-</td>
+    <td style="padding:8px; font-size:12px;">-</td>
+  </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- LIVE-DATA-END -->
+
+            <!-- Team Collaboration Timeline -->
             <div class="org-tier">
+                <div class="team-collab-section">
+                    <h2 class="section-title" style="cursor:pointer;" onclick="document.getElementById('collab-timeline-content').style.display = document.getElementById('collab-timeline-content').style.display === 'none' ? 'block' : 'none'; this.querySelector('.arrow').classList.toggle('rotate');">📅 Team Collaboration Timeline <span class="arrow" style="font-size:14px;display:inline-block;transition:transform 0.2s;">▼</span></h2>
+                    
+                    <div id="collab-timeline-content" style="display:none;">
+                    <!-- Daily Rituals -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🌅 Daily Rituals</h3>
+                        <div class="ritual-list">
+                            <div class="ritual-item">
+                                <span class="ritual-time">3:45 AM</span>
+                                <span class="ritual-icon">👥</span>
+                                <div class="ritual-details">
+                                    <strong>Team Standup</strong>
+                                    <p>Tim collects overnight work from all agents</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">4:00 AM</span>
+                                <span class="ritual-icon">📊</span>
+                                <div class="ritual-details">
+                                    <strong>Morning Brief</strong>
+                                    <p>Comprehensive update delivered to Carter</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">8:00 PM</span>
+                                <span class="ritual-icon">🐦</span>
+                                <div class="ritual-details">
+                                    <strong>Twitter AI Scout</strong>
+                                    <p>Atlas hunts for curriculum-relevant insights</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">Every 6hr</span>
+                                <span class="ritual-icon">🏕️</span>
+                                <div class="ritual-details">
+                                    <strong>Sawbill Permit Check</strong>
+                                    <p>Monitor BWCA availability</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Collaborations -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🤝 Recent Collaborations (Last 24h)</h3>
+                        <div class="collab-timeline">
+                            <div class="collab-event">
+                                <span class="event-time">5:48 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="agent-badge reid">🎓 Reid</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Refine Twitter Scout Criteria</strong>
+                                    <p>Reid delivered 6-category framework for curriculum-driven search. Tim updated Atlas's nightly instructions.</p>
+                                    <span class="event-meta">$0.23 • 44s runtime</span>
+                                </div>
+                            </div>
+                            <div class="collab-event">
+                                <span class="event-time">5:42 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="team-badge">👥 All Agents</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Team Collaboration Framework</strong>
+                                    <p>Updated all agent SOUL.md files with direct collaboration protocols. Agents can now work together autonomously.</p>
+                                    <span class="event-meta">System optimization</span>
+                                </div>
+                            </div>
+                            <div class="collab-event">
+                                <span class="event-time">5:00 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="agent-badge reid">🎓 Reid</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Curriculum Framework: "Can AI Build My Business App?"</strong>
+                                    <p>Reid designed 21-day sprint course structure with client intake system build. Framework delivered to TUB Tim Sync.</p>
+                                    <span class="event-meta">$0.23 • Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ongoing Responsibilities -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🔄 Ongoing Responsibilities</h3>
+                        
+                        <!-- Tim / Main -->
+                        <div style="margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                <img src="avatars/tim-kermit.png" alt="Tim" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                                <span class="agent-badge tim">🫡 Tim — Chief of Staff</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#667eea;font-weight:600;font-size:13px;">🌅 Morning Brief</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 4:00 AM CST</div>
+                                </div>
+                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#667eea;font-weight:600;font-size:13px;">👥 Team Standup</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 3:45 AM CST</div>
+                                </div>
+                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#667eea;font-weight:600;font-size:13px;">💼 UCL LinkedIn Pulse</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 5:00 AM CST</div>
+                                </div>
+                                <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#667eea;font-weight:600;font-size:13px;">⏰ Heartbeat Checks</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 30 min</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chase -->
+                        <div style="margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                <img src="avatars/chase-elmo.png" alt="Chase" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                                <span class="agent-badge chase">📋 Chase — Personal Assistant</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">📧 Email Monitoring</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 15 min (4am–9pm CST)</div>
+                                </div>
+                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">📝 Granola Sync</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 2 hours</div>
+                                </div>
+                                <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#a78bfa;font-weight:600;font-size:13px;">🏕️ Sawbill Permits</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Every 6 hours</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Atlas -->
+                        <div style="margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                <img src="avatars/atlas-cookie.png" alt="Atlas" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                                <span class="agent-badge atlas">🔬 Atlas — Research & Intelligence</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#46d6db;font-weight:600;font-size:13px;">🐦 Twitter AI Scout</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Daily @ 8:00 PM CST</div>
+                                </div>
+                                <div style="background:rgba(70,214,219,0.08);border:1px solid rgba(70,214,219,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#46d6db;font-weight:600;font-size:13px;">🔄 AI Platform Updates</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Weekly Mon @ 6:00 AM CST</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reid -->
+                        <div style="margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                <img src="avatars/reid-grover.png" alt="Reid" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                                <span class="agent-badge reid">🎓 Reid — Curriculum Expert</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#10b981;font-weight:600;font-size:13px;">📚 On-Demand</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for curriculum projects</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mason -->
+                        <div>
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                                <img src="avatars/mason-oscar.png" alt="Mason" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                                <span class="agent-badge mason">⚙️ Mason — Development Partner</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-left:42px;">
+                                <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:10px;">
+                                    <div style="color:#f59e0b;font-weight:600;font-size:13px;">🔧 On-Demand</div>
+                                    <div style="color:#a0a0a0;font-size:11px;margin-top:4px;">Spawned for builds & automation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div><!-- end collab-timeline-content -->
+                </div>
+            </div>
+            
+            <!-- The Team - All report directly to Tim -->
+            <div class="org-tier">
+                <div style="width:100%;text-align:center;margin-bottom:8px;">
+                    <span style="font-size:12px;color:#667eea;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Direct Reports to Tim</span>
+                </div>
                 <div class="team-tier">
                     <!-- Atlas Card -->
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
                         <div class="agent-header">
-                            <img src="https://ui-avatars.com/api/?name=Atlas&background=46d6db&color=000&size=128&bold=true" alt="Atlas" class="agent-avatar">
+                            <img src="avatars/atlas-cookie.png" alt="Atlas" class="agent-avatar">
                             <div class="agent-info">
                                 <h3>Atlas (Researcher)</h3>
                                 <div class="agent-id">atlas</div>
@@ -674,23 +1630,33 @@
                             </div>
                             <div class="stat">
                                 Spawns
-                                <strong>1</strong>
+                                <strong>0</strong>
                             </div>
                         </div>
                         <div class="dropdown-section">
                             <button class="toggle-dropdown" onclick="toggleDropdown('atlas-tasks')">
-                                Task Audit (Last 24h)
+                                Task Audit (Last 24h) · 4
                                 <span class="arrow">▼</span>
                             </button>
                             <div class="dropdown-content" id="atlas-tasks">
+                                <!-- atlas-tasks-START -->
                                 <div class="task-item">
-                                    <div class="task-name">Twitter AI Scout (8pm CST)</div>
-                                    <div class="task-meta">71K tokens · <span class="task-cost">~$0.03</span> · 8:00 PM</div>
-                                </div>
+                                <div class="task-name">🟢 Run the full 54-profile UCL LinkedIn Pulse scrape with the FIXED scraper, exactly as it will run Monday mornings at 5am.</div>
+                                <div class="task-meta">? · 6m ago · 10:07 AM</div>
+                            </div>
                                 <div class="task-item">
-                                    <div class="task-name">Morning Brief Research</div>
-                                    <div class="task-meta">31K tokens · <span class="task-cost">~$0.03</span> · 4:00 AM</div>
-                                </div>
+                                <div class="task-name">✅ Fix the LinkedIn scraper URL issue and validate with a small test BEFORE running the full scrape.</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 16m ago · 9:57 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Run a full production test of the NEW LinkedIn scraper you just built.</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 31m ago · 9:42 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Update the UCL LinkedIn Pulse scraping logic to capture complete post data.</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 46m ago · 9:27 AM</div>
+                            </div>
+                            <!-- atlas-tasks-END -->
                             </div>
                             
                             <button class="toggle-dropdown" onclick="toggleDropdown('atlas-scheduled')">
@@ -734,7 +1700,7 @@
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
                         <div class="agent-header">
-                            <img src="https://ui-avatars.com/api/?name=Reid&background=10b981&color=fff&size=128&bold=true" alt="Reid" class="agent-avatar">
+                            <img src="avatars/reid-grover.png" alt="Reid" class="agent-avatar">
                             <div class="agent-info">
                                 <h3>Reid (Curriculum Expert)</h3>
                                 <div class="agent-id">reid</div>
@@ -754,14 +1720,13 @@
                         </div>
                         <div class="dropdown-section">
                             <button class="toggle-dropdown" onclick="toggleDropdown('reid-tasks')">
-                                Task Audit (Last 24h)
+                                Task Audit (Last 24h) · 0
                                 <span class="arrow">▼</span>
                             </button>
                             <div class="dropdown-content" id="reid-tasks">
-                                <div class="task-item">
-                                    <div class="task-name">"Can AI Build My Business App?" Curriculum Design</div>
-                                    <div class="task-meta">10.3K tokens · <span class="task-cost">~$0.17</span> · completed 5:02 AM</div>
-                                </div>
+                                <!-- reid-tasks-START -->
+                                <p style="color: #808080; font-style: italic;">No tasks in last 24 hours</p>
+                            <!-- reid-tasks-END -->
                             </div>
                             
                             <button class="toggle-dropdown" onclick="toggleDropdown('reid-scheduled')">
@@ -791,7 +1756,7 @@
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
                         <div class="agent-header">
-                            <img src="https://ui-avatars.com/api/?name=Mason&background=f59e0b&color=000&size=128&bold=true" alt="Mason" class="agent-avatar">
+                            <img src="avatars/mason-oscar.png" alt="Mason" class="agent-avatar">
                             <div class="agent-info">
                                 <h3>Mason (Development Partner)</h3>
                                 <div class="agent-id">mason</div>
@@ -811,11 +1776,32 @@
                         </div>
                         <div class="dropdown-section">
                             <button class="toggle-dropdown" onclick="toggleDropdown('mason-tasks')">
-                                Task Audit (Last 24h)
+                                Task Audit (Last 24h) · 6
                                 <span class="arrow">▼</span>
                             </button>
                             <div class="dropdown-content" id="mason-tasks">
-                                <p style="color: #808080; font-style: italic;">No tasks in last 24 hours</p>
+                                <!-- mason-tasks-START -->
+                                <div class="task-item">
+                                <div class="task-name">🟢 Dashboard UI/UX overhaul - improve visual organization without removing functionality.</div>
+                                <div class="task-meta">? · 4m ago · 10:09 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Add visual indicators for tasks currently in progress on the dashboard.</div>
+                                <div class="task-meta">claude-opus-4-6 · 47m ago · 9:27 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Fix the Task Audit section on the dashboard - it's not showing completed work.</div>
+                                <div class="task-meta">claude-opus-4-6 · 51m ago · 9:23 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Fix dashboard org chart and add ongoing responsibilities section.</div>
+                                <div class="task-meta">claude-opus-4-6 · 57m ago · 9:16 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Update the dashboard generator to use Sesame Street character avatars instead of emoji.</div>
+                                <div class="task-meta">claude-opus-4-6 · 59m ago · 9:14 AM</div>
+                            </div>
+                            <!-- mason-tasks-END -->
                             </div>
                             
                             <button class="toggle-dropdown" onclick="toggleDropdown('mason-scheduled')">
@@ -845,7 +1831,7 @@
                     <div class="agent-card">
                         <div class="connector-vertical"></div>
                         <div class="agent-header">
-                            <img src="https://ui-avatars.com/api/?name=Chase&background=a78bfa&color=fff&size=128&bold=true" alt="Chase" class="agent-avatar">
+                            <img src="avatars/chase-elmo.png" alt="Chase" class="agent-avatar">
                             <div class="agent-info">
                                 <h3>Chase (Personal Assistant)</h3>
                                 <div class="agent-id">chase</div>
@@ -865,18 +1851,80 @@
                         </div>
                         <div class="dropdown-section">
                             <button class="toggle-dropdown" onclick="toggleDropdown('chase-tasks')">
-                                Task Audit (Last 24h)
+                                Task Audit (Last 24h) · 17
                                 <span class="arrow">▼</span>
                             </button>
                             <div class="dropdown-content" id="chase-tasks">
+                                <!-- chase-tasks-START -->
                                 <div class="task-item">
-                                    <div class="task-name">Calendar Event Creation</div>
-                                    <div class="task-meta">24K tokens · <span class="task-cost">~$0.009</span> · yesterday 7:55 PM</div>
-                                </div>
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 14m ago · 10:00 AM</div>
+                            </div>
                                 <div class="task-item">
-                                    <div class="task-name">Granola Sync (3 runs)</div>
-                                    <div class="task-meta">Minimal tokens · Auto-sync meeting transcripts</div>
-                                </div>
+                                <div class="task-name">✅ Cron: Granola Sync</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 23m ago · 9:50 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 29m ago · 9:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 44m ago · 9:30 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 59m ago · 9:15 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 1h 14m ago · 9:00 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 1h 29m ago · 8:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 1h 44m ago · 8:30 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 1h 59m ago · 8:15 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 2h 14m ago · 8:00 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Granola Sync</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 2h 23m ago · 7:50 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 2h 29m ago · 7:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 2h 44m ago · 7:30 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 2h 59m ago · 7:15 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 3h 14m ago · 7:00 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 3h 29m ago · 6:45 AM</div>
+                            </div>
+                                <div class="task-item">
+                                <div class="task-name">✅ Cron: Email monitoring - @Tim requests</div>
+                                <div class="task-meta">claude-sonnet-4-5 · 3h 44m ago · 6:30 AM</div>
+                            </div>
+                            <!-- chase-tasks-END -->
                             </div>
                             
                             <button class="toggle-dropdown" onclick="toggleDropdown('chase-scheduled')">
@@ -943,4 +1991,4 @@
         }
     </script>
 </body>
-</html>
+</html><!-- Force refresh Tue Feb 10 10:06:19 CST 2026 -->
