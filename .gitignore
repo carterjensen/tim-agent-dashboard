@@ -3,3 +3,5 @@
 !agent-dashboard.html
 !.gitignore
 !README.md
+!avatars/
+!avatars/*.png
