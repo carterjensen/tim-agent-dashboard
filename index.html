@@ -15,7 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0f0f1e;
             min-height: 100vh;
-            padding: 20px;
+            padding: 12px;
             color: #e0e0e0;
         }
         
@@ -24,16 +24,22 @@
             margin: 0 auto;
         }
         
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+        }
+        
         header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 16px;
-            padding: 24px 32px;
-            margin-bottom: 40px;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(102, 126, 234, 0.2);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
         }
         
         .header-content {
@@ -41,26 +47,47 @@
         }
         
         h1 {
-            font-size: 32px;
+            font-size: 24px;
             color: #ffffff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .subtitle {
             color: #a0a0a0;
-            font-size: 14px;
+            font-size: 12px;
+        }
+        
+        @media (min-width: 768px) {
+            header {
+                flex-direction: row;
+                align-items: center;
+                padding: 24px 32px;
+                margin-bottom: 40px;
+                border-radius: 16px;
+            }
+            
+            h1 {
+                font-size: 32px;
+                margin-bottom: 8px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
         }
         
         .refresh-btn {
             background: rgba(102, 126, 234, 0.2);
             border: 1px solid rgba(102, 126, 234, 0.4);
             color: #667eea;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            width: 100%;
+            text-align: center;
         }
         
         .refresh-btn:hover {
@@ -68,59 +95,100 @@
             border-color: rgba(102, 126, 234, 0.6);
         }
         
+        @media (min-width: 768px) {
+            .refresh-btn {
+                width: auto;
+                padding: 10px 20px;
+            }
+        }
+        
         /* Org Chart Structure */
         .org-chart {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
+            gap: 24px;
         }
         
         .org-tier {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 20px;
+            gap: 16px;
             position: relative;
             width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .org-chart {
+                gap: 40px;
+            }
+            
+            .org-tier {
+                gap: 20px;
+            }
         }
         
         /* Leader Card (Carter) */
         .leader-card {
             background: linear-gradient(135deg, #dc2127 0%, #a31615 100%);
-            border-radius: 20px;
-            padding: 32px;
+            border-radius: 16px;
+            padding: 20px;
             box-shadow: 0 12px 48px rgba(220, 33, 39, 0.4);
             border: 2px solid rgba(220, 33, 39, 0.5);
+            width: 100%;
             max-width: 400px;
             text-align: center;
         }
         
         .leader-avatar {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
             object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
         }
         
         .leader-card h2 {
-            font-size: 36px;
+            font-size: 28px;
             color: #ffffff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .leader-title {
-            font-size: 16px;
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
+        }
+        
+        @media (min-width: 768px) {
+            .leader-card {
+                border-radius: 20px;
+                padding: 32px;
+            }
+            
+            .leader-avatar {
+                width: 120px;
+                height: 120px;
+                margin: 0 auto 20px;
+                border: 4px solid rgba(255, 255, 255, 0.3);
+            }
+            
+            .leader-card h2 {
+                font-size: 36px;
+                margin-bottom: 8px;
+            }
+            
+            .leader-title {
+                font-size: 16px;
+            }
         }
         
         /* Connecting Lines */
         .connector {
             width: 2px;
-            height: 40px;
+            height: 24px;
             background: linear-gradient(to bottom, rgba(102, 126, 234, 0.5), rgba(102, 126, 234, 0.2));
             margin: 0 auto;
         }
@@ -131,7 +199,7 @@
             align-items: center;
             width: 100%;
             position: relative;
-            height: 40px;
+            height: 24px;
         }
         
         .connector-horizontal::before {
@@ -148,30 +216,56 @@
         
         .connector-vertical {
             position: absolute;
-            top: -40px;
+            top: -24px;
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            height: 40px;
+            height: 24px;
             background: rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .connector {
+                height: 40px;
+            }
+            
+            .connector-horizontal {
+                height: 40px;
+            }
+            
+            .connector-vertical {
+                top: -40px;
+                height: 40px;
+            }
         }
         
         /* Agent Cards */
         .agent-card {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 12px;
+            padding: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
             border: 1px solid rgba(102, 126, 234, 0.2);
-            max-width: 360px;
             width: 100%;
             position: relative;
         }
         
         .agent-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .agent-card {
+                border-radius: 16px;
+                padding: 24px;
+                max-width: 360px;
+            }
+            
+            .agent-card:hover {
+                transform: translateY(-4px);
+            }
         }
         
         .agent-card.coordinator {
@@ -265,7 +359,7 @@
             background: rgba(102, 126, 234, 0.1);
             border: 1px solid rgba(102, 126, 234, 0.3);
             color: #667eea;
-            padding: 8px 16px;
+            padding: 12px 16px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
@@ -277,10 +371,18 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
+            min-height: 44px;
         }
         
         .toggle-dropdown:hover {
             background: rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .toggle-dropdown {
+                padding: 8px 16px;
+                min-height: auto;
+            }
         }
         
         .dropdown-content {
@@ -387,10 +489,17 @@
         
         .team-tier {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 16px;
             max-width: 1400px;
             width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .team-tier {
+                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+                gap: 20px;
+            }
         }
         
         /* Custom scrollbar */
@@ -409,12 +518,6 @@
         
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(102, 126, 234, 0.7);
-        }
-        
-        @media (max-width: 768px) {
-            .team-tier {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
