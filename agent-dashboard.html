@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-last-updated="2026-02-10T05:47:26-06:00">
+<html lang="en" data-last-updated="2026-02-10T05:58:19-06:00">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -519,6 +519,252 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(102, 126, 234, 0.7);
         }
+        
+        /* Team Collaboration Timeline Styles */
+        .team-collab-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+        }
+        
+        .collab-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .collab-card {
+                border-radius: 16px;
+                padding: 24px;
+            }
+        }
+        
+        .collab-heading {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .collab-heading {
+                font-size: 20px;
+            }
+        }
+        
+        /* Daily Rituals */
+        .ritual-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .ritual-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid rgba(102, 126, 234, 0.5);
+        }
+        
+        .ritual-time {
+            flex-shrink: 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            min-width: 65px;
+            text-align: center;
+        }
+        
+        .ritual-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .ritual-details {
+            flex: 1;
+        }
+        
+        .ritual-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .ritual-details p {
+            color: #a0a0a0;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        /* Collaboration Timeline */
+        .collab-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .collab-event {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid rgba(16, 185, 129, 0.5);
+        }
+        
+        .event-time {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        
+        .event-flow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .agent-badge, .team-badge {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .agent-badge.tim {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.4);
+        }
+        
+        .agent-badge.atlas {
+            background: rgba(70, 214, 219, 0.2);
+            color: #46d6db;
+            border: 1px solid rgba(70, 214, 219, 0.4);
+        }
+        
+        .agent-badge.reid {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+        
+        .agent-badge.mason {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        
+        .agent-badge.chase {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, 0.4);
+        }
+        
+        .team-badge {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+        
+        .flow-arrow {
+            color: #808080;
+            font-size: 16px;
+        }
+        
+        .event-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .event-details p {
+            color: #c0c0c0;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .event-meta {
+            display: inline-block;
+            font-size: 11px;
+            color: #808080;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        /* Ongoing Work */
+        .ongoing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .ongoing-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .ongoing-details {
+            flex: 1;
+        }
+        
+        .ongoing-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .ongoing-details p {
+            color: #a0a0a0;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -651,6 +897,133 @@
             
             <!-- Connector -->
             <div class="connector-horizontal"></div>
+            
+            <!-- Team Collaboration Timeline -->
+            <div class="org-tier">
+                <div class="team-collab-section">
+                    <h2 class="section-title">📅 Team Collaboration Timeline</h2>
+                    
+                    <!-- Daily Rituals -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🌅 Daily Rituals</h3>
+                        <div class="ritual-list">
+                            <div class="ritual-item">
+                                <span class="ritual-time">3:45 AM</span>
+                                <span class="ritual-icon">👥</span>
+                                <div class="ritual-details">
+                                    <strong>Team Standup</strong>
+                                    <p>Tim collects overnight work from all agents</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">4:00 AM</span>
+                                <span class="ritual-icon">📊</span>
+                                <div class="ritual-details">
+                                    <strong>Morning Brief</strong>
+                                    <p>Comprehensive update delivered to Carter</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">8:00 PM</span>
+                                <span class="ritual-icon">🐦</span>
+                                <div class="ritual-details">
+                                    <strong>Twitter AI Scout</strong>
+                                    <p>Atlas hunts for curriculum-relevant insights</p>
+                                </div>
+                            </div>
+                            <div class="ritual-item">
+                                <span class="ritual-time">Every 6hr</span>
+                                <span class="ritual-icon">🏕️</span>
+                                <div class="ritual-details">
+                                    <strong>Sawbill Permit Check</strong>
+                                    <p>Monitor BWCA availability</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Collaborations -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🤝 Recent Collaborations (Last 24h)</h3>
+                        <div class="collab-timeline">
+                            <div class="collab-event">
+                                <span class="event-time">5:48 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="agent-badge reid">🎓 Reid</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Refine Twitter Scout Criteria</strong>
+                                    <p>Reid delivered 6-category framework for curriculum-driven search. Tim updated Atlas's nightly instructions.</p>
+                                    <span class="event-meta">$0.23 • 44s runtime</span>
+                                </div>
+                            </div>
+                            <div class="collab-event">
+                                <span class="event-time">5:42 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="team-badge">👥 All Agents</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Team Collaboration Framework</strong>
+                                    <p>Updated all agent SOUL.md files with direct collaboration protocols. Agents can now work together autonomously.</p>
+                                    <span class="event-meta">System optimization</span>
+                                </div>
+                            </div>
+                            <div class="collab-event">
+                                <span class="event-time">5:00 AM</span>
+                                <div class="event-flow">
+                                    <span class="agent-badge tim">🫡 Tim</span>
+                                    <span class="flow-arrow">→</span>
+                                    <span class="agent-badge reid">🎓 Reid</span>
+                                </div>
+                                <div class="event-details">
+                                    <strong>Curriculum Framework: "Can AI Build My Business App?"</strong>
+                                    <p>Reid designed 21-day sprint course structure with client intake system build. Framework delivered to TUB Tim Sync.</p>
+                                    <span class="event-meta">$0.23 • Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ongoing Work -->
+                    <div class="collab-card">
+                        <h3 class="collab-heading">🔄 Ongoing Work</h3>
+                        <div class="ongoing-list">
+                            <div class="ongoing-item">
+                                <span class="agent-badge atlas">🔬 Atlas</span>
+                                <div class="ongoing-details">
+                                    <strong>Nightly Twitter Scouting</strong>
+                                    <p>5 curriculum-relevant tweets per night → feeds course design</p>
+                                </div>
+                            </div>
+                            <div class="ongoing-item">
+                                <span class="agent-badge chase">📋 Chase</span>
+                                <div class="ongoing-details">
+                                    <strong>Email Monitoring</strong>
+                                    <p>Every 15 min (4am-9pm) → flags @Tim requests</p>
+                                </div>
+                            </div>
+                            <div class="ongoing-item">
+                                <span class="agent-badge reid">🎓 Reid</span>
+                                <div class="ongoing-details">
+                                    <strong>Curriculum Design</strong>
+                                    <p>Standing by for course frameworks and teaching strategy</p>
+                                </div>
+                            </div>
+                            <div class="ongoing-item">
+                                <span class="agent-badge mason">⚙️ Mason</span>
+                                <div class="ongoing-details">
+                                    <strong>Technical Architecture</strong>
+                                    <p>Ready for builds, tool evaluations, system optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- The Team -->
             <div class="org-tier">
